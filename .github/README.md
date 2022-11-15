@@ -7,8 +7,8 @@ My usual workflow uses `neovim` with `AstroNvim` config, `fish` shell, `wezterm`
 ## Install
 
 ```
-git clone git@github.com:kahnclusions/dotfiles.git ~/.dotfiles
-git --git-dir=.dotfiles/.git --work-tree=. reset --hard
-git --git-dir=.dotfiles/.git config --local status.showUntrackedFiles no
+git clone --bare git@github.com:kahnclusions/dotfiles.git ~/.dotfiles
+git --git-dir=.dotfiles --work-tree=. reset --hard
+git --git-dir=.dotfiles config --local status.showUntrackedFiles no
 brew bundle --file=$HOME/.meta/Brewfile
 ```
