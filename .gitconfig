@@ -9,3 +9,5 @@
 	default = current
 [credential]
 	helper = osxkeychain
+[includeIf "gitdir:~/workspace/"]
+  path = ~/workspace/.gitconfig_include
