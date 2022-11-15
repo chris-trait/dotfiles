@@ -6,6 +6,11 @@ set -x GPG_TTY (tty)
 set -x ANDROID_HOME $HOME/Library/Android/sdk
 set -x PINENTRY_USER_DATA USE_CURSES=0
 
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
+--color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
+--color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
+
 fish_add_path -m /opt/homebrew/bin
 fish_add_path -m $HOME/Library/Application\ Support/Coursier/bin
 fish_add_path -m $HOME/.cargo/bin
