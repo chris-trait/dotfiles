@@ -1,0 +1,57 @@
+tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
+tap "homebrew/cask-drivers"
+tap "koekeishiya/formulae" # provides yabai, skhd
+tap "wez/wezterm" # provides wezterm
+tap "cormacrelf/tap" # provides dark-notify
+tap "veeso/termscp"
+tap "yt-dlp/taps"
+
+cask_args no_quarantine: true, appdir: "~/Applications"
+
+# Apps
+cask "alfred"
+cask "discord"
+cask "docker"
+cask "plexamp"
+cask "steam"
+cask "signal"
+cask "wezterm"
+cask "resilio-sync"
+cask "eloston-chromium"
+cask "commander-one"
+cask "qbittorrent"
+cask "protonvpn"
+
+# nerd fonts
+cask "font-iosevka-nerd-font", force: true
+cask "font-victor-mono-nerd-font", force: true
+
+# Window management
+brew "yabai"
+brew "skhd"
+
+# The one true editor
+brew "neovim", args: ['HEAD']
+brew "dark-notify"
+
+# Terminal tools
+brew "fish"
+brew "starship"
+brew "ripgrep"
+brew "bottom"
+brew "exa"
+brew "jq"
+brew "tldr"
+brew "wget"
+brew "fd"
+brew "bat"
+
+brew "autoconf"
+brew "automake"
+brew "coreutils"
+
+brew "age"
+brew "stylua"
+brew "yt-dlp"
+brew "termscp"
