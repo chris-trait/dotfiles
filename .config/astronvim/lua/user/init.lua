@@ -318,11 +318,15 @@ local config = {
          {
             "ruifm/gitlinker.nvim",
             config = function()
+               local default_callbacks = {
+                  ["github.com"] = require("gitlinker.hosts").get_github_type_url,
+               }
+               local ok, extra = pcall(require, "user.extra")
+               local callbacks = not ok and default_callbacks or extra.gitlinker_callbacks
+
                require("gitlinker").setup {
                   opts = { print_url = false },
-                  callbacks = {
-                     ["github.com$"] = require("gitlinker.hosts").get_github_type_url,
-                  },
+                  callbacks = callbacks,
                }
             end,
          },
