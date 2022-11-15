@@ -1,5 +1,5 @@
 set -x DOTFILES $HOME/.dotfiles
-set -x JAVA_HOME (sdk home java 17.0.3-tem)
+# set -x JAVA_HOME (sdk home java 17.0.3-tem)
 set -x BROWSER w3m
 set -x EDITOR nvim
 set -x GPG_TTY (tty)
@@ -39,3 +39,12 @@ alias vault-uk="VAULT_ADDR=\"https://hashicorp-vault.test.euw2.ckint.io:6661\" v
 set -gx PNPM_HOME "/Users/ck/Library/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 # pnpm end
+
+function update_theme --on-variable macOS_Theme
+  echo "theme updated"
+    if [ "$macOS_Theme" = "dark" ]
+        set_theme_dark
+    else if [ "$macOS_Theme" = "light" ]
+        set_theme_light
+    end
+end
