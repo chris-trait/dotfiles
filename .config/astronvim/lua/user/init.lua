@@ -326,7 +326,19 @@ local config = {
                }
             end,
          },
-         { "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } },
+         {
+            "mfussenegger/nvim-dap",
+            config = function()
+               require "user.plugins.dap"
+            end,
+         },
+         {
+            "scalameta/nvim-metals",
+            requires = { "nvim-lua/plenary.nvim" },
+            config = function()
+               require "user.plugins.metals"
+            end,
+         },
          {
             "jose-elias-alvarez/typescript.nvim",
             after = "mason-lspconfig.nvim",

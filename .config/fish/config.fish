@@ -1,5 +1,17 @@
 set -x DOTFILES $HOME/.dotfiles
-set -x NVIM $HOME/.config/nvim
+set -x JAVA_HOME (sdk home java 17.0.3-tem)
+set -x BROWSER w3m
+set -x EDITOR nvim
+set -x GPG_TTY (tty)
+set -x ANDROID_HOME $HOME/Library/Android/sdk
+set -x PINENTRY_USER_DATA USE_CURSES=0
+
+fish_add_path -m /opt/homebrew/bin
+fish_add_path -m $HOME/Library/Application\ Support/Coursier/bin
+fish_add_path -m $HOME/.cargo/bin
+fish_add_path -m ~/.local/bin
+fish_add_path -m $ANDROID_HOME/tools
+fish_add_path -m $ANDROID_HOME/platform-tools
 
 if status is-interactive
     starship init fish | source
@@ -10,6 +22,18 @@ if status is-interactive
     alias lt="exa --tree --git --icons"
     alias la="exa --all --icons --long --header --git --group-directories-first --octal-permissions --no-permissions --time-style=long-iso"
 end
+
+alias dots="cd $DOTFILES"
+alias gp="git pull"
+alias gP="git push"
+alias gs="git status"
+alias gb="git checkout -b"
+alias gc="git checkout"
+alias gS="git stash"
+alias grm="git rebase origin/master"
+alias gri="git rebase -i"
+
+alias vault-uk="VAULT_ADDR=\"https://hashicorp-vault.test.euw2.ckint.io:6661\" vault login  -method=oidc -path=okta_oidc | grep 'token  ' | awk '{print \$2}' | tee .hvault.local.token"
 
 # pnpm
 set -gx PNPM_HOME "/Users/ck/Library/pnpm"

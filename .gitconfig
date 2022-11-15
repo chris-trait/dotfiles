@@ -1,0 +1,11 @@
+[user]
+	email = 92762809+kahnclusions@users.noreply.github.com
+	name = Christopher Kahn
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[push]
+	default = current
+[credential]
+	helper = osxkeychain
