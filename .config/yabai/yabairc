@@ -1,15 +1,5 @@
 #!/usr/bin/env sh
 
-# pkill -x yb
-# yb &
-
-# yabai -m signal --add event=window_created action="echo \"create \$YABAI_WINDOW_ID\" | nc -U /tmp/yb_$USER.socket"
-# yabai -m signal --add event=window_destroyed action="echo \"destroy \$YABAI_WINDOW_ID\" | nc -U /tmp/yb_$USER.socket"
-# yabai -m signal --add event=space_changed action="echo \"query\" | nc -U /tmp/yb_$USER.socket"
-# yabai -m signal --add event=display_changed action="echo \"query\" | nc -U /tmp/yb_$USER.socket"
-# yabai -m signal --add event=mission_control_enter action="echo \"mission_control_enter\" | nc -U /tmp/yb_$USER.socket"
-# yabai -m signal --add event=mission_control_exit action="echo \"mission_control_exit\" | nc -U /tmp/yb_$USER.socket"
-
 # global settings
 yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          autofocus
@@ -28,10 +18,3 @@ yabai -m config bottom_padding               16
 yabai -m config left_padding                 16
 yabai -m config right_padding                16
 yabai -m config window_gap                   16
-# yabai -m config external_bar                 "main:25:0"
-
-# kill any existing limelight process if one exists, before we launch a new one
-# killall limelightup &> /dev/null
-# killall limelight &> /dev/null
-# limelightup &> /dev/null &
-
