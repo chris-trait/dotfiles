@@ -1,50 +1,22 @@
 local dap = require "dap"
+local api = vim.api
+local keymap_restore = {}
+dap.listeners.after["event_initialized"]["me"] = function()
+   for _, buf in pairs(api.nvim_list_bufs()) do
+      local keymaps = api.nvim_buf_get_keymap(buf, "n")
+      for _, keymap in pairs(keymaps) do
+         if keymap.lhs == "K" then
+            table.insert(keymap_restore, keymap)
+            api.nvim_buf_del_keymap(buf, "n", "K")
+         end
+      end
+   end
+   api.nvim_set_keymap("n", "K", "<Cmd>lua require(\"dap.ui.widgets\").hover()<CR>", { silent = true })
+end
 
-dap.adapters.chrome = {
-   type = "executable",
-   command = "node",
-   args = { os.getenv "HOME" .. "/opt/vscode-chrome-debug/out/src/chromeDebug.js" },
-}
-
-dap.adapters.node2 = {
-   type = "executable",
-   command = "node",
-   args = { os.getenv "HOME" .. "/opt/vscode-node-debug2/out/src/nodeDebug.js" },
-}
-
-local dap_typescript = {
-   type = "chrome",
-   name = "Chrome",
-   request = "attach",
-   port = 9222,
-   console = "integratedTerminal",
-   cwd = vim.fn.getcwd(),
-   sourceMaps = true,
-   restart = true,
-   webRoot = "${workspaceFolder}",
-}
-
-dap.configurations.typescriptreact = {
-   dap_typescript,
-}
-dap.configurations.typescript = {
-   dap_typescript,
-}
-
-vim.cmd [[highlight DebugBreakpoint guifg=red]]
-vim.cmd [[highlight DebugBreakpointConditional guifg=red]]
-vim.cmd [[highlight DebugBreakpointRejected guifg=red]]
-
-dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
-
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DebugBreakpoint", linehl = "", numhl = "" })
-vim.fn.sign_define(
-   "DapBreakpointCondition",
-   { text = "", texthl = "DebugBreakpointConditional", linehl = "", numhl = "" }
-)
-vim.fn.sign_define(
-   "DapBreakpointRejected",
-   { text = "", texthl = "DebugBreakpointRejected", linehl = "", numhl = "" }
-)
-vim.fn.sign_define("DapLogPoint", { text = "L", texthl = "", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "debugPC", numhl = "" })
+dap.listeners.after["event_terminated"]["me"] = function()
+   for _, keymap in pairs(keymap_restore) do
+      api.nvim_buf_set_keymap(keymap.buffer, keymap.mode, keymap.lhs, keymap.rhs, { silent = keymap.silent == 1 })
+   end
+   keymap_restore = {}
+end

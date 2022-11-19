@@ -210,6 +210,27 @@ local config = {
          ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
          ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
 
+         -- dap
+         ["<leader>d"] = { function() end, desc = "+Debug" },
+         ["<leader>dd"] = { "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle breakpoint" },
+         ["<leader>dc"] = { "<cmd>DapContinue<cr>", desc = "Continue" },
+         ["<leader>di"] = { "<cmd>DapStepInto<cr>", desc = "Step into" },
+         ["<leader>do"] = { "<cmd>DapStepOut<cr>", desc = "Step out" },
+         ["<leader>dn"] = { "<cmd>DapStepOver<cr>", desc = "Step over" },
+         ["<leader>dl"] = { "<cmd>DapShowLog<cr>", desc = "Show log" },
+         ["<leader>dr"] = { "<cmd>DapShowRepl<cr>", desc = "Show REPL" },
+         ["<leader>dL"] = { "<cmd>DapLoadLaunchJSON<cr>", desc = "Load launch.json" },
+         ["<leader>dt"] = { "<cmd>DapTerminate<cr>", desc = "Terminate" },
+
+         ["<leader>ds"] = {
+            function()
+               local widgets = require "dap.ui.widgets"
+               local my_sidebar = widgets.sidebar(widgets.scopes)
+               my_sidebar.open()
+            end,
+            desc = "Terminate",
+         },
+
          ["<leader>lo"] = {
             function()
                if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
@@ -368,6 +389,39 @@ local config = {
                require("typescript").setup {
                   server = astronvim.lsp.server_settings "tsserver",
                }
+            end,
+         },
+         {
+            "mxsdev/nvim-dap-vscode-js",
+            config = function()
+               require("dap-vscode-js").setup {
+                  debugger_path = "/Users/ck/.local/share/nvim/vscode-js-debug",
+                  adapters = {
+                     "pwa-node",
+                     "pwa-chrome",
+                     "node-terminal",
+                     "pwa-extensionHost",
+                  }, -- which adapters to register in nvim-dap
+               }
+
+               for _, language in ipairs { "typescriptreact", "typescript", "javascript" } do
+                  require("dap").configurations[language] = {
+                     {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch file",
+                        program = "${file}",
+                        cwd = "${workspaceFolder}",
+                     },
+                     {
+                        type = "pwa-node",
+                        request = "attach",
+                        name = "Attach",
+                        processId = require("dap.utils").pick_process,
+                        cwd = "${workspaceFolder}",
+                     },
+                  }
+               end
             end,
          },
       },
