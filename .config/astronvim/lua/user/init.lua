@@ -294,7 +294,25 @@ local config = {
    -- Configure plugins
    plugins = {
       init = {
-         { "catppuccin/nvim", as = "catppuccin" },
+         ["p00f/nvim-ts-rainbow"] = { disable = true },
+         {
+            "catppuccin/nvim",
+            as = "catppuccin",
+            config = function()
+               require("catppuccin").setup {
+                  integrations = {
+                     ts_rainbow = true,
+                     cmp = true,
+                     gitsigns = true,
+                     nvimtree = true,
+                     telescope = true,
+                     notify = true,
+                     hop = true,
+                     which_key = true,
+                  },
+               }
+            end,
+         },
          {
             "phaazon/hop.nvim",
             config = function()
