@@ -1,4 +1,4 @@
-local dap = require "dap"
+local dap = require("dap")
 local api = vim.api
 local keymap_restore = {}
 dap.listeners.after["event_initialized"]["me"] = function()

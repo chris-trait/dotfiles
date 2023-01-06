@@ -4,7 +4,7 @@
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
-local utils = require "user.utils"
+local utils = require("user.utils")
 local colorschemes = {
    dark = "catppuccin-mocha",
    light = "catppuccin-latte",
@@ -12,7 +12,7 @@ local colorschemes = {
 local mode = "dark"
 
 if utils.get_os() == "darwin" then
-   local code = os.execute "defaults read -g AppleInterfaceStyle 2> /dev/null"
+   local code = os.execute("defaults read -g AppleInterfaceStyle 2> /dev/null")
    mode = code == 0 and "dark" or "light"
 end
 
@@ -206,9 +206,9 @@ local config = {
          ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
          ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
          -- hop
-         ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
-         ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
-         ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
+         -- ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
+         -- ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
+         -- ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
 
          -- dap
          ["<leader>d"] = { function() end, desc = "+Debug" },
@@ -224,7 +224,7 @@ local config = {
 
          ["<leader>ds"] = {
             function()
-               local widgets = require "dap.ui.widgets"
+               local widgets = require("dap.ui.widgets")
                local my_sidebar = widgets.sidebar(widgets.scopes)
                my_sidebar.open()
             end,
@@ -234,11 +234,11 @@ local config = {
          ["<leader>lo"] = {
             function()
                if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-                  vim.cmd "TypescriptOrganizeImports"
+                  vim.cmd([[TypescriptOrganizeImports]])
                elseif vim.bo.filetype == "scala" then
-                  vim.cmd "MetalsOrganizeImports"
+                  vim.cmd("MetalsOrganizeImports")
                else
-                  vim.notify "Unsupported filetype."
+                  vim.notify("Unsupported filetype.")
                end
             end,
             desc = "Organize imports",
@@ -246,9 +246,9 @@ local config = {
          ["<leader>lm"] = {
             function()
                if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-                  vim.cmd "TypescriptAddMissingImports"
+                  vim.cmd("TypescriptAddMissingImports")
                else
-                  vim.notify "Unsupported filetype."
+                  vim.notify("Unsupported filetype.")
                end
             end,
             desc = "Add missing imports",
@@ -256,26 +256,26 @@ local config = {
 
          ["<leader>c"] = {
             function()
-               vim.notify "d'oh!"
+               vim.notify("d'oh!")
             end,
             desc = "Do nothing",
          },
 
          ["f"] = {
             function()
-               require("hop").hint_char1 {
+               require("hop").hint_char1({
                   direction = require("hop.hint").HintDirection.AFTER_CURSOR,
                   current_line_only = true,
-               }
+               })
             end,
             desc = "Find after cursor",
          },
          ["F"] = {
             function()
-               require("hop").hint_char1 {
+               require("hop").hint_char1({
                   direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
                   current_line_only = true,
-               }
+               })
             end,
             desc = "Find after cursor",
          },
@@ -293,19 +293,19 @@ local config = {
          ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
          ["f"] = {
             function()
-               require("hop").hint_char1 {
+               require("hop").hint_char1({
                   direction = require("hop.hint").HintDirection.AFTER_CURSOR,
                   current_line_only = true,
-               }
+               })
             end,
             desc = "Find after cursor",
          },
          ["F"] = {
             function()
-               require("hop").hint_char1 {
+               require("hop").hint_char1({
                   direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
                   current_line_only = true,
-               }
+               })
             end,
             desc = "Find after cursor",
          },
@@ -320,7 +320,7 @@ local config = {
             "catppuccin/nvim",
             as = "catppuccin",
             config = function()
-               require("catppuccin").setup {
+               require("catppuccin").setup({
                   integrations = {
                      ts_rainbow = true,
                      cmp = true,
@@ -331,13 +331,13 @@ local config = {
                      hop = true,
                      which_key = true,
                   },
-               }
+               })
             end,
          },
          {
             "phaazon/hop.nvim",
             config = function()
-               require("hop").setup {}
+               require("hop").setup({})
             end,
          },
          {
@@ -345,12 +345,12 @@ local config = {
             config = function()
                -- vim.cmd.colorscheme'ayu-mirage'
                if require("user.utils").get_os() == "darwin" then
-                  require("dark_notify").run {
+                  require("dark_notify").run({
                      schemes = {
                         dark = "catppuccin-mocha",
                         light = "catppuccin-latte",
                      },
-                  }
+                  })
                end
             end,
          },
@@ -363,38 +363,32 @@ local config = {
                local ok, extra = pcall(require, "user.extra")
                local callbacks = not ok and default_callbacks or extra.gitlinker_callbacks
 
-               require("gitlinker").setup {
+               require("gitlinker").setup({
                   opts = { print_url = false },
                   callbacks = callbacks,
-               }
+               })
             end,
          },
-         {
-            "mfussenegger/nvim-dap",
-            config = function()
-               require "user.plugins.dap"
-            end,
-         },
-         {
-            "scalameta/nvim-metals",
-            requires = { "nvim-lua/plenary.nvim" },
-            config = function()
-               require "user.plugins.metals"
-            end,
-         },
+         -- {
+         --    "scalameta/nvim-metals",
+         --    requires = { "nvim-lua/plenary.nvim" },
+         --    config = function()
+         --       require "user.plugins.metals"
+         --    end,
+         -- },
          {
             "jose-elias-alvarez/typescript.nvim",
             after = "mason-lspconfig.nvim",
             config = function()
-               require("typescript").setup {
-                  server = astronvim.lsp.server_settings "tsserver",
-               }
+               require("typescript").setup({
+                  server = astronvim.lsp.server_settings("tsserver"),
+               })
             end,
          },
          {
             "mxsdev/nvim-dap-vscode-js",
             config = function()
-               require("dap-vscode-js").setup {
+               require("dap-vscode-js").setup({
                   debugger_path = "/Users/ck/.local/share/nvim/vscode-js-debug",
                   adapters = {
                      "pwa-node",
@@ -402,9 +396,9 @@ local config = {
                      "node-terminal",
                      "pwa-extensionHost",
                   }, -- which adapters to register in nvim-dap
-               }
+               })
 
-               for _, language in ipairs { "typescriptreact", "typescript", "javascript" } do
+               for _, language in ipairs({ "typescriptreact", "typescript", "javascript" }) do
                   require("dap").configurations[language] = {
                      {
                         type = "pwa-node",
@@ -428,7 +422,7 @@ local config = {
       -- All other entries override the require("<key>").setup({...}) call for default plugins
       ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
          -- config variable is the default configuration table for the setup function call
-         local null_ls = require "null-ls"
+         local null_ls = require("null-ls")
 
          -- Check supported formatters and linters
          -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
@@ -446,7 +440,7 @@ local config = {
       },
       -- use mason-lspconfig to configure LSP installations
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-         ensure_installed = { "sumneko_lua", "tsserver" },
+         ensure_installed = { "sumneko_lua", "tsserver", "rust_analyzer" },
       },
       -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
