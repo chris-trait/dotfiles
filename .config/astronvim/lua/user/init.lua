@@ -1,5 +1,5 @@
 --              AstroNvim Configuration Table
--- All configuration changes should go inside of the table below
+--{ "ellisonleao/gruvbox.nvim" } All configuration changes should go inside of the table below
 
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
@@ -7,9 +7,9 @@
 local utils = require "user.utils"
 local colorschemes = {
    dark = "catppuccin-mocha",
-   light = "catppuccin-latte",
+   light = "zenbones",
 }
-local mode = "dark"
+local mode = "light"
 
 if utils.get_os() == "darwin" then
    local code = os.execute "defaults read -g AppleInterfaceStyle 2> /dev/null"
@@ -348,7 +348,7 @@ local config = {
                   require("dark_notify").run {
                      schemes = {
                         dark = "catppuccin-mocha",
-                        light = "catppuccin-latte",
+                        light = "zenbones",
                      },
                   }
                end
@@ -369,12 +369,12 @@ local config = {
                }
             end,
          },
-         {
-            "mfussenegger/nvim-dap",
-            config = function()
-               require "user.plugins.dap"
-            end,
-         },
+         -- {
+         --    "mfussenegger/nvim-dap",
+         --    config = function()
+         --       require "user.plugins.dap"
+         --    end,
+         -- },
          {
             "scalameta/nvim-metals",
             requires = { "nvim-lua/plenary.nvim" },
@@ -424,6 +424,27 @@ local config = {
                end
             end,
          },
+         {
+            "nvim-neorg/neorg",
+            config = function()
+               require("neorg").setup {
+                  load = {
+                     ["core.defaults"] = {},
+                     ["core.norg.dirman"] = {
+                        config = {
+                           workspaces = {
+                              work = "~/notes/work",
+                              home = "~/notes/home",
+                           },
+                        },
+                     },
+                  },
+               }
+            end,
+            requires = "nvim-lua/plenary.nvim",
+         },
+         { "ellisonleao/gruvbox.nvim" },
+         { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" },
       },
       -- All other entries override the require("<key>").setup({...}) call for default plugins
       ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
