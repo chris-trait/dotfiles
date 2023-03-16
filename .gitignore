@@ -43,3 +43,4 @@ workspace
 
 .config/gh/hosts.yml
 .config/astronvim/lua/user/extra.lua
+.config/nvim/
