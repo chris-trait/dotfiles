@@ -71,59 +71,6 @@ local config = {
       ui_notifications_enabled = true, -- disable notifications when toggling UI elements
     },
   },
-  -- If you need more control, you can use the function()...end notation
-  -- options = function(local_vim)
-  --   local_vim.opt.relativenumber = true
-  --   local_vim.g.mapleader = " "
-  --   local_vim.opt.whichwrap = vim.opt.whichwrap - { 'b', 's' } -- removing option from list
-  --   local_vim.opt.shortmess = vim.opt.shortmess + { I = true } -- add to option list
-  --
-  --   return local_vim
-  -- end,
-
-  -- Set dashboard header
-  -- header = {
-  --         "_________________________________________________/\\/\\___________________",
-  --         "_/\\/\\/\\/\\______/\\/\\/\\______/\\/\\/\\____/\\/\\__/\\/\\__________/\\/\\/\\__/\\/\\___",
-  --         "_/\\/\\__/\\/\\__/\\/\\/\\/\\/\\__/\\/\\__/\\/\\__/\\/\\__/\\/\\__/\\/\\____/\\/\\/\\/\\/\\/\\/\\_",
-  --         "_/\\/\\__/\\/\\__/\\/\\________/\\/\\__/\\/\\____/\\/\\/\\____/\\/\\____/\\/\\__/\\__/\\/\\_",
-  --         "_/\\/\\__/\\/\\____/\\/\\/\\/\\____/\\/\\/\\________/\\______/\\/\\/\\__/\\/\\______/\\/\\_",
-  --         "________________________________________________________________________",
-  -- },
-
-  header = {
-    "                                                       _/                      ",
-    "   _/_/_/        _/_/        _/_/     _/      _/               _/_/_/  _/_/    ",
-    "  _/    _/    _/_/_/_/    _/    _/   _/      _/      _/       _/    _/    _/   ",
-    " _/    _/    _/          _/    _/     _/  _/        _/       _/    _/    _/    ",
-    "_/    _/      _/_/_/      _/_/         _/          _/       _/    _/    _/     ",
-    "                                                                               ",
-  },
-
-  -- Default theme configuration
-  default_theme = {
-    plugins = {
-      aerial = true,
-      beacon = false,
-      bufferline = true,
-      cmp = true,
-      dashboard = true,
-      highlighturl = true,
-      hop = true,
-      indent_blankline = true,
-      lightspeed = false,
-      ["neo-tree"] = true,
-      notify = true,
-      ["nvim-tree"] = true,
-      ["nvim-web-devicons"] = true,
-      rainbow = true,
-      symbols_outline = false,
-      telescope = true,
-      treesitter = true,
-      vimwiki = false,
-      ["which-key"] = false,
-    },
-  },
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
@@ -321,6 +268,19 @@ local config = {
 
   -- Configure plugins
   plugins = {
+    {
+      "goolord/alpha-nvim",
+      opts = function(_, opts) -- override the options using lazy.nvim
+        opts.section.header.val = { -- change the header section value
+          "                                                       _/                      ",
+          "   _/_/_/        _/_/        _/_/     _/      _/               _/_/_/  _/_/    ",
+          "  _/    _/    _/_/_/_/    _/    _/   _/      _/      _/       _/    _/    _/   ",
+          " _/    _/    _/          _/    _/     _/  _/        _/       _/    _/    _/    ",
+          "_/    _/      _/_/_/      _/_/         _/          _/       _/    _/    _/     ",
+          "                                                                               ",
+        }
+      end,
+    },
     ["p00f/nvim-ts-rainbow"] = { disable = true },
     {
       "catppuccin/nvim",
