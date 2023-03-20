@@ -1,19 +1,19 @@
 --              AstroNvim Configuration Table
--- All configuration changes should go inside of the table below
+--{ "ellisonleao/gruvbox.nvim" } All configuration changes should go inside of the table below
 
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
-local utils = require "user.utils"
+local utils = require("user.utils")
 local colorschemes = {
     dark = "zenbones",
     light = "zenbones",
 }
-local mode = "light"
+local mode = "dark"
 
 if utils.get_os() == "darwin" then
-    local code = os.execute "defaults read -g AppleInterfaceStyle 2> /dev/null"
-    mode = code == 0 and "dark" or "light"
+  local code = os.execute("defaults read -g AppleInterfaceStyle 2> /dev/null")
+  mode = code == 0 and "dark" or "light"
 end
 
 local config = {
@@ -68,58 +68,6 @@ local config = {
             ui_notifications_enabled = true, -- disable notifications when toggling UI elements
         },
     },
-    -- If you need more control, you can use the function()...end notation
-    -- options = function(local_vim)
-    --   local_vim.opt.relativenumber = true
-    --   local_vim.g.mapleader = " "
-    --   local_vim.opt.whichwrap = vim.opt.whichwrap - { 'b', 's' } -- removing option from list
-    --   local_vim.opt.shortmess = vim.opt.shortmess + { I = true } -- add to option list
-    --
-    --   return local_vim
-    -- end,
-
-    -- Set dashboard header
-    -- header = {
-    --         "_________________________________________________/\\/\\___________________",
-    --         "_/\\/\\/\\/\\______/\\/\\/\\______/\\/\\/\\____/\\/\\__/\\/\\__________/\\/\\/\\__/\\/\\___",
-    --         "_/\\/\\__/\\/\\__/\\/\\/\\/\\/\\__/\\/\\__/\\/\\__/\\/\\__/\\/\\__/\\/\\____/\\/\\/\\/\\/\\/\\/\\_",
-    --         "_/\\/\\__/\\/\\__/\\/\\________/\\/\\__/\\/\\____/\\/\\/\\____/\\/\\____/\\/\\__/\\__/\\/\\_",
-    --         "_/\\/\\__/\\/\\____/\\/\\/\\/\\____/\\/\\/\\________/\\______/\\/\\/\\__/\\/\\______/\\/\\_",
-    --         "________________________________________________________________________",
-    -- },
-
-    header = {
-        "                                                       _/                      ",
-        "   _/_/_/        _/_/        _/_/     _/      _/               _/_/_/  _/_/    ",
-        "  _/    _/    _/_/_/_/    _/    _/   _/      _/      _/       _/    _/    _/   ",
-        " _/    _/    _/          _/    _/     _/  _/        _/       _/    _/    _/    ",
-        "_/    _/      _/_/_/      _/_/         _/          _/       _/    _/    _/     ",
-        "                                                                               ",
-    },
-    -- Default theme configuration
-    default_theme = {
-        plugins = {
-            aerial = true,
-            beacon = false,
-            bufferline = true,
-            cmp = true,
-            dashboard = true,
-            highlighturl = true,
-            hop = true,
-            indent_blankline = true,
-            lightspeed = false,
-            ["neo-tree"] = true,
-            notify = true,
-            ["nvim-tree"] = true,
-            ["nvim-web-devicons"] = true,
-            rainbow = true,
-            symbols_outline = false,
-            telescope = true,
-            treesitter = true,
-            vimwiki = false,
-            ["which-key"] = true,
-        },
-    },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
         virtual_text = true,
@@ -127,20 +75,21 @@ local config = {
     },
     -- Extend LSP configuration
     lsp = {
+        setup_handlers = {
+            tsserver = function(_, opts)
+              require("typescript").setup({ server = opts })
+            end,
+        },
         -- enable servers that you already have installed without mason
         skip_setup = {
-            -- "tsserver",
+            "sourcekit",
         },
         servers = {
+            "sourcekit",
+            -- "tsserver",
+            -- "sourcekit"
+            -- "rust_analyzer",
             -- "pyright"
-        },
-        lsp = {
-            setup_handlers = {
-                -- add custom handler
-                tsserver = function(_, opts)
-                    require("typescript").setup { server = opts }
-                end,
-            },
         },
         formatting = {
             -- control auto formatting on save
@@ -207,12 +156,13 @@ local config = {
             ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
             ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
             -- hop
-            ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
-            ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
-            ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
+            -- ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
+            -- ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
+            -- ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
 
             -- dap
-            -- ["<leader>d"] = { function() end, desc = "+Debug" },
+            ["<leader>d"] = { function()
+            end, desc = "+Debug" },
             -- ["<leader>dd"] = { "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle breakpoint" },
             -- ["<leader>dc"] = { "<cmd>DapContinue<cr>", desc = "Continue" },
             -- ["<leader>di"] = { "<cmd>DapStepInto<cr>", desc = "Step into" },
@@ -222,71 +172,61 @@ local config = {
             -- ["<leader>dr"] = { "<cmd>DapShowRepl<cr>", desc = "Show REPL" },
             -- ["<leader>dL"] = { "<cmd>DapLoadLaunchJSON<cr>", desc = "Load launch.json" },
             -- ["<leader>dt"] = { "<cmd>DapTerminate<cr>", desc = "Terminate" },
-            --
+
             -- ["<leader>ds"] = {
             --    function()
-            --       local widgets = require "dap.ui.widgets"
+            --       local widgets = require("dap.ui.widgets")
             --       local my_sidebar = widgets.sidebar(widgets.scopes)
             --       my_sidebar.open()
             --    end,
             --    desc = "Terminate",
             -- },
 
-            ["gd"] = {
-                function()
-                    if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-                        vim.cmd "TypescriptGoToSourceDefinition"
-                    else
-                        vim.lsp.buf.definition()
-                    end
-                end,
-                desc = "Go to definition",
-            },
             ["<leader>lo"] = {
                 function()
-                    if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-                        vim.cmd "TypescriptOrganizeImports"
-                    elseif vim.bo.filetype == "scala" then
-                        vim.cmd "MetalsOrganizeImports"
-                    else
-                        vim.notify "Unsupported filetype."
-                    end
+                  if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+                    vim.cmd([[TypescriptOrganizeImports]])
+                  elseif vim.bo.filetype == "scala" then
+                    vim.cmd("MetalsOrganizeImports")
+                  else
+                    vim.notify("Unsupported filetype.")
+                  end
                 end,
                 desc = "Organize imports",
             },
             ["<leader>lm"] = {
                 function()
-                    if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-                        vim.cmd "TypescriptAddMissingImports"
-                    else
-                        vim.notify "Unsupported filetype."
-                    end
+                  if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+                    vim.cmd("TypescriptAddMissingImports")
+                  else
+                    vim.notify("Unsupported filetype.")
+                  end
                 end,
                 desc = "Add missing imports",
             },
 
             ["<leader>c"] = {
                 function()
-                    vim.notify "d'oh!"
+                  vim.notify("d'oh!")
                 end,
                 desc = "Do nothing",
             },
 
             ["f"] = {
                 function()
-                    require("hop").hint_char1 {
-                        direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-                        current_line_only = true,
-                    }
+                  -- require("hop").hint_char1({
+                  --    direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+                  --    current_line_only = true,
+                  -- })
                 end,
                 desc = "Find after cursor",
             },
             ["F"] = {
                 function()
-                    require("hop").hint_char1 {
-                        direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-                        current_line_only = true,
-                    }
+                  -- require("hop").hint_char1({
+                  --    direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+                  --    current_line_only = true,
+                  -- })
                 end,
                 desc = "Find after cursor",
             },
@@ -299,155 +239,203 @@ local config = {
         },
         v = {
             -- hop
-            ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
-            ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
-            ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
-            ["f"] = {
-                function()
-                    require("hop").hint_char1 {
-                        direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-                        current_line_only = true,
-                    }
-                end,
-                desc = "Find after cursor",
-            },
-            ["F"] = {
-                function()
-                    require("hop").hint_char1 {
-                        direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-                        current_line_only = true,
-                    }
-                end,
-                desc = "Find after cursor",
-            },
+            -- ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
+            -- ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
+            -- ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
+            -- ["f"] = {
+            --    function()
+            --       require("hop").hint_char1({
+            --          direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+            --          current_line_only = true,
+            --       })
+            --    end,
+            --    desc = "Find after cursor",
+            -- },
+            -- ["F"] = {
+            --    function()
+            --       require("hop").hint_char1({
+            --          direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+            --          current_line_only = true,
+            --       })
+            --    end,
+            --    desc = "Find after cursor",
+            -- },
         },
     },
     -- Configure plugins
     plugins = {
+        {
+            "goolord/alpha-nvim",
+            opts = function(_, opts) -- override the options using lazy.nvim
+              opts.section.header.val = { -- change the header section value
+                  "                                                       _/                      ",
+                  "   _/_/_/        _/_/        _/_/     _/      _/               _/_/_/  _/_/    ",
+                  "  _/    _/    _/_/_/_/    _/    _/   _/      _/      _/       _/    _/    _/   ",
+                  " _/    _/    _/          _/    _/     _/  _/        _/       _/    _/    _/    ",
+                  "_/    _/      _/_/_/      _/_/         _/          _/       _/    _/    _/     ",
+                  "                                                                               ",
+              }
+            end,
+        },
         ["p00f/nvim-ts-rainbow"] = { disable = true },
         {
             "catppuccin/nvim",
-            name = "catppuccin",
+            as = "catppuccin",
             config = function()
-                require("catppuccin").setup {
-                    integrations = {
-                        ts_rainbow = true,
-                        cmp = true,
-                        gitsigns = true,
-                        nvimtree = true,
-                        telescope = true,
-                        notify = true,
-                        hop = true,
-                        which_key = true,
-                    },
-                }
+              require("catppuccin").setup({
+                  integrations = {
+                      ts_rainbow = true,
+                      cmp = true,
+                      gitsigns = true,
+                      nvimtree = true,
+                      telescope = true,
+                      notify = true,
+                      hop = true,
+                      which_key = true,
+                  },
+              })
             end,
         },
         {
             "phaazon/hop.nvim",
             config = function()
-                require("hop").setup {}
+              require("hop").setup({})
             end,
         },
         {
             "cormacrelf/dark-notify",
+            dependencies = {
+                "rktjmp/lush.nvim",
+            },
+            lazy = false,
             config = function()
-                -- vim.cmd.colorscheme'ayu-mirage'
-                if require("user.utils").get_os() == "darwin" then
-                    require("dark_notify").run {
-                        schemes = {
-                            dark = "zenbones",
-                            light = "zenbones",
-                        },
-                    }
-                end
+              -- vim.cmd.colorscheme'ayu-mirage'
+              if require("user.utils").get_os() == "darwin" then
+                require("dark_notify").run({
+                    schemes = {
+                        dark = "zenbones",
+                        light = "zenbones",
+                    },
+                })
+              end
             end,
         },
         {
             "ruifm/gitlinker.nvim",
-            lazy = false,
             config = function()
-                local default_callbacks = {
-                    ["github.com"] = require("gitlinker.hosts").get_github_type_url,
-                }
-                local ok, extra = pcall(require, "user.extra")
-                local callbacks = not ok and default_callbacks or extra.gitlinker_callbacks
+              local default_callbacks = {
+                  ["github.com"] = require("gitlinker.hosts").get_github_type_url,
+              }
+              local ok, extra = pcall(require, "user.extra")
+              local callbacks = not ok and default_callbacks or extra.gitlinker_callbacks
 
-                require("gitlinker").setup {
-                    opts = { print_url = false },
-                    callbacks = callbacks,
-                }
+              require("gitlinker").setup({
+                  opts = { print_url = false },
+                  callbacks = callbacks,
+              })
             end,
         },
-        {
-            "scalameta/nvim-metals",
-            dependencies = { "nvim-lua/plenary.nvim" },
-        },
+        -- {
+        --    "mfussenegger/nvim-dap",
+        --    config = function()
+        --       require "user.plugins.dap"
+        --    end,
+        -- },
+        -- {
+        --    "scalameta/nvim-metals",
+        --    requires = { "nvim-lua/plenary.nvim" },
+        --    config = function()
+        --       require("user.plugins.metals")
+        --    end,
+        -- },
+        -- {
+        --    "scalameta/nvim-metals",
+        --    requires = { "nvim-lua/plenary.nvim" },
+        --    config = function()
+        --       require "user.plugins.metals"
+        --    end,
+        -- },
         {
             "jose-elias-alvarez/typescript.nvim",
             after = "mason-lspconfig.nvim",
-        },
-        {
-            "mxsdev/nvim-dap-vscode-js",
             config = function()
-                require("dap-vscode-js").setup {
-                    debugger_path = "/Users/ck/.local/share/nvim/vscode-js-debug",
-                    adapters = {
-                        "pwa-node",
-                        "pwa-chrome",
-                        "node-terminal",
-                        "pwa-extensionHost",
-                    }, -- which adapters to register in nvim-dap
-                }
+              require("typescript").setup({
+                  disable_commands = false,
+              })
+            end,
+        },
+        -- {
+        --    "mxsdev/nvim-dap-vscode-js",
+        --    config = function()
+        --       require("dap-vscode-js").setup({
+        --          debugger_path = "/Users/ck/.local/share/nvim/vscode-js-debug",
+        --          adapters = {
+        --             "pwa-node",
+        --             "pwa-chrome",
+        --             "node-terminal",
+        --             "pwa-extensionHost",
+        --          }, -- which adapters to register in nvim-dap
+        --       })
+        --
+        --       for _, language in ipairs({ "typescriptreact", "typescript", "javascript" }) do
+        --          require("dap").configurations[language] = {
+        --             {
+        --                type = "pwa-node",
+        --                request = "launch",
+        --                name = "Launch file",
+        --                program = "${file}",
+        --                cwd = "${workspaceFolder}",
+        --             },
+        --             {
+        --                type = "pwa-node",
+        --                request = "attach",
+        --                name = "Attach",
+        --                processId = require("dap.utils").pick_process,
+        --                cwd = "${workspaceFolder}",
+        --             },
+        --          }
+        --       end
+        --    end,
+        -- },
+        { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" },
+        {
+            "xbase-lab/xbase",
+            run = "make install", -- make free_space (not recommended, longer build time)
+            requires = {
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope.nvim",
+                "neovim/nvim-lspconfig",
+            },
+            config = function()
+              require("xbase").setup({}) -- see default configuration bellow
+            end,
+        },
+        -- All other entries override the require("<key>").setup({...}) call for default plugins
+        ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
+          -- config variable is the default configuration table for the setup function call
+          local null_ls = require("null-ls")
 
-                for _, language in ipairs { "typescriptreact", "typescript", "javascript" } do
-                    require("dap").configurations[language] = {
-                        {
-                            type = "pwa-node",
-                            request = "launch",
-                            name = "Launch file",
-                            program = "${file}",
-                            cwd = "${workspaceFolder}",
-                        },
-                        {
-                            type = "pwa-node",
-                            request = "attach",
-                            name = "Attach",
-                            processId = require("dap.utils").pick_process,
-                            cwd = "${workspaceFolder}",
-                        },
-                    }
-                end
-            end,
+          -- Check supported formatters and linters
+          -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+          -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+          config.sources = {
+              -- Set a formatter
+              null_ls.builtins.formatting.stylua,
+              null_ls.builtins.formatting.prettier,
+              null_ls.builtins.diagnostics.eslint,
+          }
+          return config -- return final config table
+        end,
+        treesitter = { -- overrides `require("treesitter").setup(...)`
+            -- ensure_installed = { "lua" },
         },
-        {
-            "nvim-neorg/neorg",
-            config = function()
-                require("neorg").setup {
-                    load = {
-                        ["core.defaults"] = {},
-                        ["core.norg.dirman"] = {
-                            config = {
-                                workspaces = {
-                                    work = "~/notes/work",
-                                    home = "~/notes/home",
-                                },
-                            },
-                        },
-                    },
-                }
-            end,
-            dependencies = { "nvim-lua/plenary.nvim" },
+        -- use mason-lspconfig to configure LSP installations
+        ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
+            ensure_installed = { "sumneko_lua", "tsserver", "rust_analyzer", "sourcekit" },
         },
-        { "ellisonleao/gruvbox.nvim" },
-        { "mcchrish/zenbones.nvim",  dependencies = { "rktjmp/lush.nvim" } },
-        { "arturgoms/moonbow.nvim" },
-        { "ellisonleao/gruvbox.nvim" },
-        { "folke/tokyonight.nvim" },
-        {
-            "klen/nvim-test",
-            config = function()
-            end,
+        -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
+        ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
+            ensure_installed = { "prettier", "stylua" },
         },
     },
     -- LuaSnip Options
@@ -495,43 +483,22 @@ local config = {
     -- augroups/autocommands and custom filetypes also this just pure lua so
     -- anything that doesn't fit in the normal config locations above can go here
     polish = function()
-        local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = { "scala", "sbt", "java" },
-            callback = function()
-                local metals_config = require("metals").bare_config()
-                metals_config.settings = {
-                    showImplicitArguments = true,
-                }
-
-                metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-                metals_config.on_attach = function()
-                    require("metals").setup_dap()
-                end
-                require("metals").initialize_or_attach(metals_config)
-            end,
-            group = nvim_metals_group,
-        })
-
-        local nvim_test_group = vim.api.nvim_create_augroup("nvim-test", { clear = true })
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-            callback = function()
-                -- require("nvim-test").setup {
-                --     runners = {
-                --         javascriptreact = "nvim-test.runners.jest",
-                --         javascript = "nvim-test.runners.jest",
-                --         typescript = "nvim-test.runners.jest",
-                --         typescriptreact = "nvim-test.runners.jest",
-                --     },
-                -- }
-                -- require("nvim-test.runners.jest"):setup {
-                --     command = "./node_modules/.bin/jest",
-                -- }
-                require("typescript").setup {}
-            end,
-            group = nvim_test_group,
-        })
+      require("lspconfig").sourcekit.setup({
+          root_dir = require("lspconfig.util").root_pattern("Pneumatic.xcodeproj", ".git"),
+      })
+      require("xbase").setup({}) -- see default configuration bellow
+      -- Set up custom filetypes
+      -- vim.filetype.add {
+      --   extension = {
+      --     foo = "fooscript",
+      --   },
+      --   filename = {
+      --     ["Foofile"] = "fooscript",
+      --   },
+      --   pattern = {
+      --     ["~/%.config/foo/.*"] = "fooscript",
+      --   },
+      -- }
     end,
 }
 

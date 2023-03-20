@@ -1,15 +1,15 @@
-function set_theme_dark
-  echo "setting dark theme"
-  set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-end
-
-funciton set_theme_light
-echo "setting light theme"
-  set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
-  --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
-  --color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
+function update_theme
+  if test "$argv" = "dark"
+    echo "setting dark theme"
+    set -Ux FZF_DEFAULT_OPTS "\
+      --color=bg+:#3D4042,bg:#1C1917,spinner:#B77E64,hl:#DE6E7C \
+      --color=fg:#B4BDC3,header:#DE6E7C,info:#B279A7,pointer:#B77E64 \
+      --color=marker:#B77E64,fg+:#B4BDC3,prompt:#B279A7,hl+:#DE6E7C"
+  else
+    echo "setting light theme"
+    set -Ux FZF_DEFAULT_OPTS "\
+      --color=bg+:#CBD9E3,bg:#F0EDEC,spinner:#944927,hl:#A8334C \
+      --color=fg:#2C363C,header:#A8334C,info:#88507D,pointer:#944927 \
+      --color=marker:#944927,fg+:#2C363C,prompt:#88507D,hl+:#A8334C"
+  end
 end
