@@ -1,4 +1,4 @@
- Syntax Highlighting Colors
+# Syntax Highlighting Colors
 fish_color_normal 2C363C
 fish_color_command 3B8992
 fish_color_keyword 7B3B70
@@ -14,7 +14,7 @@ fish_color_operator 4F6C31
 fish_color_escape 88507D
 fish_color_autosuggestion 888f94
 
- completion pager colors
+# completion pager colors
 fish_pager_color_progress 4F6C31
 fish_pager_color_prefix 3B8992
 fish_pager_color_completion 2C363C

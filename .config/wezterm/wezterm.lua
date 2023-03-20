@@ -33,7 +33,10 @@ for i = 1, 8 do
 end
 
 return {
-	font = wezterm.font("Iosevka Nerd Font"),
+	font = wezterm.font_with_fallback {
+		"Iosevka Slab",
+		"Symbols Nerd Font"
+	},
 	font_size = 18.0,
 	debug_key_events = true,
 	colors = colors,
