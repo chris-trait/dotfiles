@@ -41,20 +41,23 @@ set -gx PATH "$PNPM_HOME" $PATH
 # pnpm end
 
 function set_theme_dark
-  set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+    set -Ux FZF_DEFAULT_OPTS "\
+      --color=bg+:#3D4042,bg:#1C1917,spinner:#B77E64,hl:#DE6E7C \
+      --color=fg:#B4BDC3,header:#DE6E7C,info:#B279A7,pointer:#B77E64 \
+      --color=marker:#B77E64,fg+:#B4BDC3,prompt:#B279A7,hl+:#DE6E7C"
 end
 
 function set_theme_light
-  set -Ux FZF_DEFAULT_OPTS "--color=bg+:#cfc1ba,bg:#f0edec,spinner:#944927,hl:#a8334c --color=fg:#2c363c,header:#a8334c,info:#88507d,pointer:#944927 --color=marker:#944927,fg+:#4f5e68,prompt:#88507d,hl+:#a8334c"
+    set -Ux FZF_DEFAULT_OPTS "\
+      --color=bg+:#CBD9E3,bg:#F0EDEC,spinner:#944927,hl:#A8334C \
+      --color=fg:#2C363C,header:#A8334C,info:#88507D,pointer:#944927 \
+      --color=marker:#944927,fg+:#2C363C,prompt:#88507D,hl+:#A8334C"
 end
 
 function update_theme --on-variable macOS_Theme
     if [ "$macOS_Theme" = "dark" ]
         set_theme_dark
-        source "$HOME/.config/fish/themes/Catppuccin Mocha.fish"
+        source "$HOME/.config/fish/themes/Zenbones Dark.fish"
     else if [ "$macOS_Theme" = "light" ]
         set_theme_light
         source "$HOME/.config/fish/themes/Zenbones light.fish"

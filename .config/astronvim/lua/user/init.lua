@@ -93,9 +93,9 @@ local config = {
             ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
             ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
             -- hop
-            ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
-            ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
-            ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
+            ["<leader>jl"] = { function() require("hop").hint_lines_skip_whitespace() end, desc = "Hop to line" },
+            ["<leader>jj"] = { function() require("hop").hint_words() end, desc = "Hop to word" },
+            ["<leader>jc"] = { function() require("hop").hint_char2() end, desc = "Hop to digram" },
 
             -- dap
             ["<leader>d"] = { function()
@@ -176,9 +176,9 @@ local config = {
         },
         v = {
             -- hop
-            ["<leader>jl"] = { require("hop").hint_lines_skip_whitespace, desc = "Hop to line" },
-            ["<leader>jj"] = { require("hop").hint_words, desc = "Hop to word" },
-            ["<leader>jc"] = { require("hop").hint_char2, desc = "Hop to digram" },
+            ["<leader>jl"] = { function() require("hop").hint_lines_skip_whitespace() end, desc = "Hop to line" },
+            ["<leader>jj"] = { function() require("hop").hint_words() end, desc = "Hop to word" },
+            ["<leader>jc"] = { function() require("hop").hint_char2() end, desc = "Hop to digram" },
             ["f"] = {
                 function()
                     require("hop").hint_char1({
@@ -202,7 +202,7 @@ local config = {
     -- Configure plugins
     plugins = {
         ["p00f/nvim-ts-rainbow"] = { disable = true },
-        { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" },
+        { "mcchrish/zenbones.nvim", dependencies = { "rktjmp/lush.nvim" } },
         {
             "goolord/alpha-nvim",
             opts = function(_, opts)
@@ -218,6 +218,7 @@ local config = {
         },
         {
             "phaazon/hop.nvim",
+            lazy = false,
             config = function()
                 require("hop").setup({})
             end,
@@ -296,7 +297,7 @@ local config = {
         {
             "xbase-lab/xbase",
             run = "make install", -- make free_space (not recommended, longer build time)
-            requires = {
+            dependencies = {
                 "nvim-lua/plenary.nvim",
                 "nvim-telescope/telescope.nvim",
                 "neovim/nvim-lspconfig",
