@@ -15,7 +15,11 @@ local colors = colorsync.setup({
 
 local mykeys = {
 	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
-	{ key = "\\", mods = "LEADER", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+	{
+		key = "\\",
+		mods = "LEADER",
+		action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
+	},
 	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
 	{ key = "c", mods = "LEADER", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "Tab", mods = "CTRL", action = wezterm.action({ ActivateTabRelative = 1 }) },
@@ -33,8 +37,8 @@ for i = 1, 8 do
 end
 
 return {
-	font = wezterm.font("Iosevka Nerd Font"),
-	font_size = 18.0,
+	font = wezterm.font("Iosevka Nerd Font", { weight = "Regular" }),
+	font_size = 16.0,
 	debug_key_events = true,
 	colors = colors,
 	window_decorations = "RESIZE",
@@ -45,7 +49,6 @@ return {
 		bottom = 0,
 	},
 	audible_bell = "Disabled",
-
 	-- Tab bar
 	enable_tab_bar = true,
 	use_fancy_tab_bar = false,
@@ -53,7 +56,6 @@ return {
 	hide_tab_bar_if_only_one_tab = true,
 	tab_bar_at_bottom = true,
 	use_resize_increments = false,
-
 	-- Keyboard mapping
 	leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
 	keys = mykeys,

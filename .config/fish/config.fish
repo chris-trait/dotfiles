@@ -48,10 +48,7 @@ function set_theme_dark
 end
 
 function set_theme_light
-  set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
-  --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
-  --color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
+  set -Ux FZF_DEFAULT_OPTS "--color=bg+:#cfc1ba,bg:#f0edec,spinner:#944927,hl:#a8334c --color=fg:#2c363c,header:#a8334c,info:#88507d,pointer:#944927 --color=marker:#944927,fg+:#4f5e68,prompt:#88507d,hl+:#a8334c"
 end
 
 function update_theme --on-variable macOS_Theme
@@ -60,7 +57,7 @@ function update_theme --on-variable macOS_Theme
         source "$HOME/.config/fish/themes/Catppuccin Mocha.fish"
     else if [ "$macOS_Theme" = "light" ]
         set_theme_light
-        source "$HOME/.config/fish/themes/Catppuccin Latte.fish"
+        source "$HOME/.config/fish/themes/Zenbones light.fish"
     end
 end
 
