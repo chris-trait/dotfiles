@@ -325,6 +325,7 @@ local config = {
         ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
             ensure_installed = { "prettier", "stylua" },
         },
+        { "sindrets/diffview.nvim", lazy = false, dependencies = { "nvim-lua/plenary.nvim" } }
     },
     -- LuaSnip Options
     luasnip = {
