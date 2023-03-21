@@ -24,7 +24,7 @@ local config = {
         auto_quit = false, -- automatically quit the current session after a successful update
     },
     lazy = {
-        lockfile = vim.fn.stdpath("config") .. "astronvim/lazy-lock.json",
+        lockfile = vim.fn.stdpath("config") .. "/../astronvim/lazy-lock.json",
     },
     colorscheme = colorschemes[mode],
     highlights = {
