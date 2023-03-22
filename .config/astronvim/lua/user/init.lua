@@ -12,16 +12,16 @@ end
 
 local config = {
    updater = {
-      remote = "origin", -- remote to use
-      channel = "stable", -- "stable" or "nightly"
-      version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-      branch = "nightly", -- branch name (NIGHTLY ONLY)
-      commit = nil, -- commit hash (NIGHTLY ONLY)
-      pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-      skip_prompts = false, -- skip prompts about breaking changes
+      remote = "origin",     -- remote to use
+      channel = "stable",    -- "stable" or "nightly"
+      version = "latest",    -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+      branch = "nightly",    -- branch name (NIGHTLY ONLY)
+      commit = nil,          -- commit hash (NIGHTLY ONLY)
+      pin_plugins = nil,     -- nil, true, false (nil will pin plugins on stable only)
+      skip_prompts = false,  -- skip prompts about breaking changes
       show_changelog = true, -- show the changelog after performing an update
-      auto_reload = false, -- automatically reload and sync packer after a successful update
-      auto_quit = false, -- automatically quit the current session after a successful update
+      auto_reload = false,   -- automatically reload and sync packer after a successful update
+      auto_quit = false,     -- automatically quit the current session after a successful update
    },
    lazy = {
       lockfile = vim.fn.stdpath("config") .. "/../astronvim/lazy-lock.json",
@@ -40,21 +40,21 @@ local config = {
       opt = {
          -- set to true or false etc.
          relativenumber = false, -- sets vim.opt.relativenumber
-         number = false, -- sets vim.opt.number
-         spell = false, -- sets vim.opt.spell
+         number = false,         -- sets vim.opt.number
+         spell = false,          -- sets vim.opt.spell
          -- signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-         wrap = true, -- sets vim.opt.wrap
+         wrap = true,            -- sets vim.opt.wrap
          showtabline = 0,
       },
       g = {
-         mapleader = " ", -- sets vim.g.mapleader
-         autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-         cmp_enabled = true, -- enable completion at start
-         autopairs_enabled = true, -- enable autopairs at start
-         diagnostics_enabled = true, -- enable diagnostics at start
+         mapleader = " ",                   -- sets vim.g.mapleader
+         autoformat_enabled = true,         -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+         cmp_enabled = true,                -- enable completion at start
+         autopairs_enabled = true,          -- enable autopairs at start
+         diagnostics_enabled = true,        -- enable diagnostics at start
          status_diagnostics_enabled = true, -- enable diagnostics in statusline
-         icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
-         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
+         icons_enabled = true,              -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+         ui_notifications_enabled = true,   -- disable notifications when toggling UI elements
       },
    },
    -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
@@ -72,14 +72,14 @@ local config = {
       servers = {},
       formatting = {
          format_on_save = {
-            enabled = true, -- enable or disable format on save globally
-            allow_filetypes = { -- enable format on save for specified filetypes only
+            enabled = true,      -- enable or disable format on save globally
+            allow_filetypes = {  -- enable format on save for specified filetypes only
             },
             ignore_filetypes = { -- disable format on save for specified filetypes
                "markdown",
             },
          },
-         disabled = { -- disable formatting capabilities for the listed language servers
+         disabled = {       -- disable formatting capabilities for the listed language servers
          },
          timeout_ms = 1000, -- default format timeout
       },
@@ -92,10 +92,9 @@ local config = {
          ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
          ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
          ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-         -- hop
-
          -- dap
-         ["<leader>d"] = { function() end, desc = "+Debug" },
+         ["<leader>d"] = { function()
+         end, desc = "+Debug" },
          -- ["<leader>dd"] = { "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle breakpoint" },
          -- ["<leader>dc"] = { "<cmd>DapContinue<cr>", desc = "Continue" },
          -- ["<leader>di"] = { "<cmd>DapStepInto<cr>", desc = "Step into" },
@@ -278,7 +277,7 @@ local config = {
          }
          return config -- return final config table
       end,
-      treesitter = { -- overrides `require("treesitter").setup(...)`
+      treesitter = {   -- overrides `require("treesitter").setup(...)`
          -- ensure_installed = { "lua" },
       },
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
