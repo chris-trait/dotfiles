@@ -93,9 +93,24 @@ local config = {
             ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
             ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
             -- hop
-            ["<leader>jl"] = { function() require("hop").hint_lines_skip_whitespace() end, desc = "Hop to line" },
-            ["<leader>jj"] = { function() require("hop").hint_words() end, desc = "Hop to word" },
-            ["<leader>jc"] = { function() require("hop").hint_char2() end, desc = "Hop to digram" },
+            ["<leader>jl"] = {
+                function()
+                    require("hop").hint_lines_skip_whitespace()
+                end,
+                desc = "Hop to line",
+            },
+            ["<leader>jj"] = {
+                function()
+                    require("hop").hint_words()
+                end,
+                desc = "Hop to word",
+            },
+            ["<leader>jc"] = {
+                function()
+                    require("hop").hint_char2()
+                end,
+                desc = "Hop to digram",
+            },
 
             -- dap
             ["<leader>d"] = { function()
@@ -176,9 +191,24 @@ local config = {
         },
         v = {
             -- hop
-            ["<leader>jl"] = { function() require("hop").hint_lines_skip_whitespace() end, desc = "Hop to line" },
-            ["<leader>jj"] = { function() require("hop").hint_words() end, desc = "Hop to word" },
-            ["<leader>jc"] = { function() require("hop").hint_char2() end, desc = "Hop to digram" },
+            ["<leader>jl"] = {
+                function()
+                    require("hop").hint_lines_skip_whitespace()
+                end,
+                desc = "Hop to line",
+            },
+            ["<leader>jj"] = {
+                function()
+                    require("hop").hint_words()
+                end,
+                desc = "Hop to word",
+            },
+            ["<leader>jc"] = {
+                function()
+                    require("hop").hint_char2()
+                end,
+                desc = "Hop to digram",
+            },
             ["f"] = {
                 function()
                     require("hop").hint_char1({
@@ -261,39 +291,11 @@ local config = {
                 })
             end,
         },
-        -- {
-        --    "mxsdev/nvim-dap-vscode-js",
-        --    config = function()
-        --       require("dap-vscode-js").setup({
-        --          debugger_path = "/Users/ck/.local/share/nvim/vscode-js-debug",
-        --          adapters = {
-        --             "pwa-node",
-        --             "pwa-chrome",
-        --             "node-terminal",
-        --             "pwa-extensionHost",
-        --          }, -- which adapters to register in nvim-dap
-        --       })
-        --
-        --       for _, language in ipairs({ "typescriptreact", "typescript", "javascript" }) do
-        --          require("dap").configurations[language] = {
-        --             {
-        --                type = "pwa-node",
-        --                request = "launch",
-        --                name = "Launch file",
-        --                program = "${file}",
-        --                cwd = "${workspaceFolder}",
-        --             },
-        --             {
-        --                type = "pwa-node",
-        --                request = "attach",
-        --                name = "Attach",
-        --                processId = require("dap.utils").pick_process,
-        --                cwd = "${workspaceFolder}",
-        --             },
-        --          }
-        --       end
-        --    end,
-        -- },
+        {
+            "mxsdev/nvim-dap-vscode-js",
+            config = function()
+            end,
+        },
         {
             "xbase-lab/xbase",
             run = "make install", -- make free_space (not recommended, longer build time)
@@ -325,7 +327,7 @@ local config = {
         ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
             ensure_installed = { "prettier", "stylua" },
         },
-        { "sindrets/diffview.nvim", lazy = false, dependencies = { "nvim-lua/plenary.nvim" } }
+        { "sindrets/diffview.nvim", lazy = false,                         dependencies = { "nvim-lua/plenary.nvim" } },
     },
     -- LuaSnip Options
     luasnip = {
@@ -348,10 +350,28 @@ local config = {
         },
     },
     polish = function()
-        require("lspconfig").sourcekit.setup({
-            root_dir = require("lspconfig.util").root_pattern("Pneumatic.xcodeproj", ".git"),
+        vim.api.nvim_create_augroup("xbase", {})
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "swift",
+            desc = "load xbase",
+            group = "xbase",
+            callback = function()
+                require("lspconfig").sourcekit.setup({
+                    root_dir = require("lspconfig.util").root_pattern("Pneumatic.xcodeproj", ".git"),
+                })
+                require("xbase").setup({}) -- see default configuration bellow
+            end,
         })
-        require("xbase").setup({}) -- see default configuration bellow
+
+        vim.api.nvim_create_augroup("js-debug", {})
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+            desc = "load JS debugging",
+            group = "js-debug",
+            callback = function()
+                require("user.plugin.dap")
+            end,
+        })
     end,
 }
 

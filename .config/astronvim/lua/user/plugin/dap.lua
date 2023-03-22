@@ -1,22 +1,28 @@
-local dap = require("dap")
-local api = vim.api
-local keymap_restore = {}
-dap.listeners.after["event_initialized"]["me"] = function()
-   for _, buf in pairs(api.nvim_list_bufs()) do
-      local keymaps = api.nvim_buf_get_keymap(buf, "n")
-      for _, keymap in pairs(keymaps) do
-         if keymap.lhs == "K" then
-            table.insert(keymap_restore, keymap)
-            api.nvim_buf_del_keymap(buf, "n", "K")
-         end
-      end
-   end
-   api.nvim_set_keymap("n", "K", "<Cmd>lua require(\"dap.ui.widgets\").hover()<CR>", { silent = true })
-end
+require("dap-vscode-js").setup({
+    debugger_path = "/Users/ck/opt/vscode-js-debug",
+    adapters = {
+        "pwa-node",
+        "pwa-chrome",
+        "node-terminal",
+        "pwa-extensionHost",
+    }, -- which adapters to register in nvim-dap
+})
 
-dap.listeners.after["event_terminated"]["me"] = function()
-   for _, keymap in pairs(keymap_restore) do
-      api.nvim_buf_set_keymap(keymap.buffer, keymap.mode, keymap.lhs, keymap.rhs, { silent = keymap.silent == 1 })
-   end
-   keymap_restore = {}
+for _, language in ipairs({ "typescriptreact", "typescript", "javascript" }) do
+   require("dap").configurations[language] = {
+       {
+           type = "pwa-node",
+           request = "launch",
+           name = "Launch file",
+           program = "${file}",
+           cwd = "${workspaceFolder}",
+       },
+       {
+           type = "pwa-node",
+           request = "attach",
+           name = "Attach",
+           processId = require("dap.utils").pick_process,
+           cwd = "${workspaceFolder}",
+       },
+   }
 end
