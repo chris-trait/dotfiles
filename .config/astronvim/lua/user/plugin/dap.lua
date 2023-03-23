@@ -1,11 +1,11 @@
 require("dap-vscode-js").setup({
-    debugger_path = "/Users/ck/opt/vscode-js-debug",
+    debugger_path = require("user.extra")["dap-vscode-js"].debugger_path,
     adapters = {
         "pwa-node",
         "pwa-chrome",
         "node-terminal",
         "pwa-extensionHost",
-    }, -- which adapters to register in nvim-dap
+    },
 })
 
 for _, language in ipairs({ "typescriptreact", "typescript", "javascript" }) do
