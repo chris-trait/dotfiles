@@ -12,17 +12,16 @@ function M.select(colors, palette)
 		selection_fg = colors[palette].selection_fg,
 		ansi = colors[palette].ansi,
 		brights = colors[palette].brights,
-
 		tab_bar = {
 			background = colors[palette].background,
-			separator = colors[palette].background,
+			-- separator = colors[palette].background,
 			active_tab = {
 				bg_color = colors[palette].brights[3],
 				fg_color = colors[palette].background,
 			},
 			inactive_tab = {
 				bg_color = colors[palette].background,
-				bg_color_odd = colors[palette].background,
+				-- bg_color_odd = colors[palette].background,
 				fg_color = colors[palette].foreground,
 			},
 			inactive_tab_hover = {
