@@ -332,12 +332,13 @@ local config = {
             return tmp
         end
 
-        -- local colorscheme = require("zenbones")
-        -- local lushwright = require("shipwright.transform.lush")
-        -- local result = lushwright.to_vimscript(colorscheme)
-        -- local f = assert(io.open("/Users/ck/zenbones.lua", "w"))
-        -- f:write(serializeTable(result))
-        -- f:close()
+        vim.o.background = "dark"
+        local colorscheme = require("zenbones")
+        local lushwright = require("shipwright.transform.lush")
+        local result = lushwright.to_vimscript(colorscheme)
+        local f = assert(io.open("/Users/ck/zenbones-dark.lua", "w"))
+        f:write(serializeTable(result))
+        f:close()
     end,
 }
 
