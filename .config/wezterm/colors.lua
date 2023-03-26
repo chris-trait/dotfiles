@@ -1,52 +1,53 @@
 local wezterm = require("wezterm")
 
 local M = {}
-function M.select(colors, palette)
+function M.select(palettes, current)
+	local colors = palettes[current]
 	return {
-		foreground = colors[palette].foreground,
-		background = colors[palette].background,
-		cursor_bg = colors[palette].cursor_bg,
-		cursor_border = colors[palette].cursor_bg,
-		cursor_fg = colors[palette].cursor_fg,
-		selection_bg = colors[palette].selection_bg,
-		selection_fg = colors[palette].selection_fg,
-		ansi = colors[palette].ansi,
-		brights = colors[palette].brights,
+		foreground = colors.fg,
+		background = colors.bg,
+		cursor_bg = colors.fg,
+		cursor_border = colors.fg,
+		cursor_fg = colors.bg,
+		selection_bg = colors.grey[1],
+		selection_fg = colors.fg,
+		ansi = { colors.bg, colors.red.base, colors.green.base, colors.yellow.base, colors.blue.base, colors.magenta.base,
+			colors.cyan.base, colors.fg },
+		brights = { colors.bg, colors.red.bright, colors.green.bright, colors.yellow.bright, colors.blue.bright,
+			colors.magenta.bright, colors.cyan.bright, colors.fg },
 		tab_bar = {
-			background = colors[palette].background,
-			-- separator = colors[palette].background,
+			background = colors.bg,
 			active_tab = {
-				bg_color = colors[palette].brights[3],
-				fg_color = colors[palette].background,
+				fg_color = colors.beige[9],
+				bg_color = colors.beige[5],
 			},
 			inactive_tab = {
-				bg_color = colors[palette].background,
-				-- bg_color_odd = colors[palette].background,
-				fg_color = colors[palette].foreground,
+				bg_color = colors.beige[2],
+				fg_color = colors.beige[9],
 			},
 			inactive_tab_hover = {
-				bg_color = colors[palette].selection_bg,
-				fg_color = colors[palette].foreground,
+				bg_color = colors.beige[4],
+				fg_color = colors.beige[9],
 			},
 			new_tab = {
-				bg_color = colors[palette].background,
-				fg_color = colors[palette].foreground,
+				bg_color = colors.bg,
+				fg_color = colors.fg,
 			},
 			new_tab_hover = {
-				bg_color = colors[palette].selection_fg,
-				fg_color = colors[palette].foreground,
+				bg_color = colors.grey[1],
+				fg_color = colors.fg,
 				italic = true,
 			},
 		},
-		visual_bell = colors[palette].selection_bg,
+		visual_bell = colors.grey[1],
 		indexed = {
-			[16] = colors[palette].brights[4],
-			[17] = colors[palette].brights[4],
+			[16] = colors.yellow.bright,
+			[17] = colors.yellow.bright,
 		},
-		scrollbar_thumb = colors[palette].selection_fg,
-		split = colors[palette].background,
+		scrollbar_thumb = colors.grey[1],
+		split = colors.bg,
 		-- nightbuild only
-		compose_cursor = colors[palette].brights[4],
+		compose_cursor = colors.yellow.bright,
 	}
 end
 
@@ -80,48 +81,28 @@ local SOLID_RIGHT_ARROW = ""
 local palette = {}
 
 local function format_tab_title(tab, tabs, panes, config, hover, max_width)
-	local title = " " .. tab.active_pane.title .. " "
+	local title = "   " .. tab.active_pane.title .. "  "
 	local active = palette.tab_bar.active_tab
 	local inactive = palette.tab_bar.inactive_tab
-	local is_first = tab.tab_index == 0
 
 	if tab.is_active then
 		return {
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = is_first and "" or " " },
 			{ Background = { Color = active.bg_color } },
 			{ Foreground = { Color = active.fg_color } },
 			{ Attribute = { Intensity = "Bold" } },
 			{ Text = title },
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = "" },
 		}
-	end
-	if tab.tab_index % 2 == 0 then
+	elseif hover then
 		return {
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = is_first and "" or " " },
-			{ Background = { Color = inactive.bg_color } },
-			{ Foreground = { Color = inactive.fg_color } },
+			{ Background = { Color = palette.tab_bar.inactive_tab_hover.bg_color } },
+			{ Foreground = { Color = palette.tab_bar.inactive_tab_hover.fg_color } },
 			{ Text = title },
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = "" },
 		}
 	else
 		return {
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = is_first and "" or " " },
-			{ Background = { Color = inactive.bg_color_odd } },
+			{ Background = { Color = inactive.bg_color } },
 			{ Foreground = { Color = inactive.fg_color } },
 			{ Text = title },
-			{ Background = { Color = palette.tab_bar.background } },
-			{ Foreground = { Color = inactive.fg_color } },
-			{ Text = "" },
 		}
 	end
 end
@@ -147,6 +128,7 @@ function M.setup(options)
 			palette = scheme
 			if overrides.background ~= scheme.background then
 				overrides.colors = scheme
+				overrides.mode = appearance:find("Dark") and "dark" or "light"
 				window:set_config_overrides(overrides)
 			end
 		end)

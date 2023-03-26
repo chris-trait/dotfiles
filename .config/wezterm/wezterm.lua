@@ -4,7 +4,7 @@ local colorsync = require("colors")
 
 local colors = colorsync.setup({
 	should_sync = true,
-	mode = "dark",
+	-- mode = "light",
 	colors = {
 		light = zenbones.light,
 		dark = zenbones.dark,
@@ -12,18 +12,18 @@ local colors = colorsync.setup({
 })
 
 local mykeys = {
-	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{ key = "-",   mods = "LEADER",     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{
 		key = "\\",
 		mods = "LEADER",
 		action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
 	},
-	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
-	{ key = "c", mods = "LEADER", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
-	{ key = "Tab", mods = "CTRL", action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "z",   mods = "LEADER",     action = "TogglePaneZoomState" },
+	{ key = "c",   mods = "LEADER",     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
+	{ key = "Tab", mods = "CTRL",       action = wezterm.action({ ActivateTabRelative = 1 }) },
 	{ key = "Tab", mods = "SHIFT|CTRL", action = wezterm.action({ ActivateTabRelative = -1 }) },
-	{ key = "n", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = 1 }) },
-	{ key = "p", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = -1 }) },
+	{ key = "n",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "p",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = -1 }) },
 }
 
 for i = 1, 8 do
