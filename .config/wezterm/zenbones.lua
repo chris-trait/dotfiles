@@ -81,33 +81,33 @@ return {
 			"#AFA099",
 		},
 		red = {
-			base = '#A8334C',
-			bright = '#94253E',
+			bright = '#E8838F',
+			base = '#DE6E7C',
 			highlight = '#EBD8DA'
 		},
 		green = {
-			base = '#4F6C31',
-			bright = '#3F5A22',
+			bright = '#8BAE68',
+			base = '#819B69',
 			highlight = "#CBE5B8"
 		},
 		yellow = {
-			base = '#944927',
-			bright = '#803D1C',
+			bright = '#D68C67',
+			base = '#B77E64',
 			highlight = "#EFDFDC",
 		},
 		blue = {
-			base = '#286486',
-			bright = '#1D5573',
+			bright = '#61ABDA',
+			base = '#6099C0',
 			highlight = "#D9E4EF",
 		},
 		magenta = {
-			base = '#88507D',
-			bright = '#7B3B70',
+			bright = '#CF86C1',
+			base = '#B279A7',
 			highlight = "#EFDEEB",
 		},
 		cyan = {
-			base = '#3B8992',
-			bright = '#2B747C',
+			bright = '#65B8C1',
+			base = '#66A5AD',
 			highlight = "#D6EBED"
 		},
 	},

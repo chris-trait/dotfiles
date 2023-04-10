@@ -15,6 +15,8 @@ function M.select(palettes, current)
 			colors.cyan.base, colors.fg },
 		brights = { colors.bg, colors.red.bright, colors.green.bright, colors.yellow.bright, colors.blue.bright,
 			colors.magenta.bright, colors.cyan.bright, colors.fg },
+		-- ansi = { "#1C1917", "#DE6E7C", "#819B69", "#B77E64", "#6099C0", "#B279A7", "#66A5AD", "#B4BDC3" },
+		-- brights = { "#403833", "#E8838F", "#8BAE68", "#D68C67", "#61ABDA", "#CF86C1", "#65B8C1", "#888F94" },
 		tab_bar = {
 			background = colors.bg,
 			active_tab = {
