@@ -2,7 +2,7 @@
 
 # global settings
 yabai -m config mouse_follows_focus          off
-yabai -m config focus_follows_mouse          autofocus
+yabai -m config focus_follows_mouse          off # autofocus
 yabai -m config window_placement             second_child
 yabai -m config window_topmost               on
 yabai -m config split_ratio                  0.50
@@ -18,3 +18,6 @@ yabai -m config bottom_padding               16
 yabai -m config left_padding                 16
 yabai -m config right_padding                16
 yabai -m config window_gap                   16
+
+yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
+yabai -m rule --add app="^Arc$" title="^$" manage=off mouse_follows_focus=off
