@@ -40,7 +40,7 @@ return {
 		"Iosevka Slab",
 		"Symbols Nerd Font",
 	}),
-	font_size = 20.0,
+	font_size = 18.0,
 	debug_key_events = true,
 	colors = colors,
 	window_decorations = "RESIZE",

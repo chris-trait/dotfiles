@@ -9,15 +9,13 @@ cask_args no_quarantine: true, appdir: "~/Applications"
 
 # Apps
 cask "alfred"
-cask "discord"
-cask "docker"
 cask "plexamp"
-cask "signal"
 cask "wezterm"
 
 # nerd fonts
-cask "font-iosevka-nerd-font", force: true
-cask "font-victor-mono-nerd-font", force: true
+cask "font-iosevka", force: true
+cask "font-iosevka-slab", force: true
+cask "font-symbols-only-nerd-font", force: true
 
 # Window management
 brew "yabai"
