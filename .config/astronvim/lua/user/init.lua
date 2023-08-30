@@ -28,12 +28,17 @@ local config = {
    },
    colorscheme = colorschemes[mode],
    highlights = {
-      -- init = { -- this table overrides highlights in all themes
-      --   Normal = { bg = "#000000" },
-      -- }
-      -- duskfox = { -- a table of overrides/changes to the duskfox theme
-      --   Normal = { bg = "#000000" },
-      -- },
+      ["rose-pine"] = {
+         IndentBlanklineChar = { 
+            fg = mode == "dark" and "#44415a" or "#dfdad9",
+         },
+         IndentBlanklineSpaceChar = { 
+            fg = mode == "dark" and "#44415a" or "#dfdad9",
+         },
+         IndentBlanklineSpaceCharBlankline = { 
+            fg = mode == "dark" and "#44415a" or "#dfdad9",
+         }
+      },
    },
    -- set vim options here (vim.<first_key>.<second_key> = value)
    options = {
@@ -55,6 +60,7 @@ local config = {
          status_diagnostics_enabled = true, -- enable diagnostics in statusline
          icons_enabled = true,              -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
          ui_notifications_enabled = true,   -- disable notifications when toggling UI elements
+         indent_blankline_show_current_context = true,
       },
    },
    -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
@@ -168,7 +174,7 @@ local config = {
          },
       },
       {
-         dir = "~/workspace/rose-pine",
+         'rose-pine/neovim',
          name = "rose-pine",
          config = function()
             require("rose-pine").setup({
