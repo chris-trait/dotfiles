@@ -5,6 +5,7 @@ set -x EDITOR nvim
 set -x GPG_TTY (tty)
 set -x ANDROID_HOME $HOME/Library/Android/sdk
 set -x PINENTRY_USER_DATA USE_CURSES=0
+set fish_greeting
 
 fish_add_path -m $HOME/.brew/bin
 fish_add_path -m $HOME/Library/Application\ Support/Coursier/bin
