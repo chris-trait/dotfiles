@@ -1,5 +1,5 @@
 local wezterm = require("wezterm")
-local rose_pine = require("rose-pine-moon")
+local rose_pine = require("rose-pine")
 local rose_pine_dawn = require("rose-pine-dawn")
 local colorsync = require("colors")
 
