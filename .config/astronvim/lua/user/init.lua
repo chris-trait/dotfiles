@@ -174,7 +174,7 @@ local config = {
          },
       },
       {
-         dir = "~/workspace/rose-pine",
+         "rose-pine/neovim",
          name = "rose-pine",
          config = function()
             require("rose-pine").setup({
@@ -206,14 +206,14 @@ local config = {
          "cormacrelf/dark-notify",
          lazy = false,
          config = function()
-            if require("user.utils").get_os() == "darwin" then
-               require("dark_notify").run({
-                  schemes = {
-                     dark = "rose-pine",
-                     light = "rose-pine",
-                  },
-               })
-            end
+           if require("user.utils").get_os() == "darwin" then
+              require("dark_notify").run({
+                 schemes = {
+                    dark = "rose-pine",
+                    light = "rose-pine",
+                 },
+              })
+           end
          end,
       },
       {
