@@ -33,8 +33,6 @@ alias gS="git stash"
 alias grm="git rebase origin/master"
 alias gri="git rebase -i"
 
-alias vault-uk="VAULT_ADDR=\"https://hashicorp-vault.test.euw2.ckint.io:6661\" vault login  -method=oidc -path=okta_oidc | grep 'token  ' | awk '{print \$2}' | tee .hvault.local.token"
-
 # pnpm
 set -gx PNPM_HOME "/Users/ck/Library/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
