@@ -5,7 +5,7 @@ tap "koekeishiya/formulae" # provides yabai, skhd
 tap "wez/wezterm" # provides wezterm
 tap "cormacrelf/tap" # provides dark-notify
 
-cask_args no_quarantine: true, appdir: "~/Applications"
+cask_args no_quarantine: true
 
 # Apps
 cask "alfred"
