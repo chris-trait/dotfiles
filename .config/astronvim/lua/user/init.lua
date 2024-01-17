@@ -37,7 +37,13 @@ local config = {
          },
          IndentBlanklineSpaceCharBlankline = { 
             fg = mode == "dark" and "#44415a" or "#dfdad9",
-         }
+         },
+         IndentBlanklineIndent1 = { 
+            fg = mode == "dark" and "#44415a" or "#dfdad9",
+         },
+         IndentBlanklineIndent2 = { 
+            fg = mode == "dark" and "#44415a" or "#dfdad9",
+         },
       },
    },
    -- set vim options here (vim.<first_key>.<second_key> = value)
@@ -174,7 +180,7 @@ local config = {
          },
       },
       {
-         "rose-pine/neovim",
+         "rose-pine/nvim",
          name = "rose-pine",
          config = function()
             require("rose-pine").setup({
