@@ -1,4 +1,7 @@
 local wezterm = require("wezterm")
+local kanagawa_wave = require("kanagawa-wave")
+local kanagawa_lotus = require("kanagawa-lotus")
+
 local rose_pine = require("rose-pine")
 local rose_pine_dawn = require("rose-pine-dawn")
 local colorsync = require("colors")
@@ -7,8 +10,8 @@ local colors = colorsync.setup({
 	should_sync = true,
 	-- mode = "light",
 	colors = {
-		light = rose_pine_dawn.colors(),
-		dark = rose_pine.colors(),
+		light = kanagawa_lotus.colors(),
+		dark = kanagawa_wave.colors(),
 	},
 })
 
@@ -41,6 +44,7 @@ return {
 		"Symbols Nerd Font",
 	}),
 	font_size = 18.0,
+	force_reverse_video_cursor = true,
 	debug_key_events = true,
 	colors = colors,
 	window_decorations = "RESIZE",

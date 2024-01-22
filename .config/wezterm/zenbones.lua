@@ -24,34 +24,34 @@ return {
 			"#564E4A",
 		},
 		red = {
-			base = '#A8334C',
-			bright = '#94253E',
-			highlight = '#EBD8DA'
+			base = "#A8334C",
+			bright = "#94253E",
+			highlight = "#EBD8DA",
 		},
 		green = {
-			base = '#4F6C31',
-			bright = '#3F5A22',
-			highlight = "#CBE5B8"
+			base = "#4F6C31",
+			bright = "#3F5A22",
+			highlight = "#CBE5B8",
 		},
 		yellow = {
-			base = '#944927',
-			bright = '#803D1C',
+			base = "#944927",
+			bright = "#803D1C",
 			highlight = "#EFDFDC",
 		},
 		blue = {
-			base = '#286486',
-			bright = '#1D5573',
+			base = "#286486",
+			bright = "#1D5573",
 			highlight = "#D9E4EF",
 		},
 		magenta = {
-			base = '#88507D',
-			bright = '#7B3B70',
+			base = "#88507D",
+			bright = "#7B3B70",
 			highlight = "#EFDEEB",
 		},
 		cyan = {
-			base = '#3B8992',
-			bright = '#2B747C',
-			highlight = "#D6EBED"
+			base = "#3B8992",
+			bright = "#2B747C",
+			highlight = "#D6EBED",
 		},
 	},
 	dark = {
@@ -62,15 +62,15 @@ return {
 			"#64696D",
 			"#797F84",
 			"#868C91",
-			'#888F94',
+			"#888F94",
 			"#8D9499",
 			"#979FA4",
 			"#B4BDC3",
-			'#C4CACF',
+			"#C4CACF",
 			"#CAD0D4",
 		},
 		beige = {
-			'#403833',
+			"#403833",
 			"#4A433F",
 			"#5C534F",
 			"#685F5A",
@@ -81,34 +81,34 @@ return {
 			"#AFA099",
 		},
 		red = {
-			bright = '#E8838F',
-			base = '#DE6E7C',
-			highlight = '#EBD8DA'
+			bright = "#E8838F",
+			base = "#DE6E7C",
+			highlight = "#EBD8DA",
 		},
 		green = {
-			bright = '#8BAE68',
-			base = '#819B69',
-			highlight = "#CBE5B8"
+			bright = "#8BAE68",
+			base = "#819B69",
+			highlight = "#CBE5B8",
 		},
 		yellow = {
-			bright = '#D68C67',
-			base = '#B77E64',
+			bright = "#D68C67",
+			base = "#B77E64",
 			highlight = "#EFDFDC",
 		},
 		blue = {
-			bright = '#61ABDA',
-			base = '#6099C0',
+			bright = "#61ABDA",
+			base = "#6099C0",
 			highlight = "#D9E4EF",
 		},
 		magenta = {
-			bright = '#CF86C1',
-			base = '#B279A7',
+			bright = "#CF86C1",
+			base = "#B279A7",
 			highlight = "#EFDEEB",
 		},
 		cyan = {
-			bright = '#65B8C1',
-			base = '#66A5AD',
-			highlight = "#D6EBED"
+			bright = "#65B8C1",
+			base = "#66A5AD",
+			highlight = "#D6EBED",
 		},
 	},
 }

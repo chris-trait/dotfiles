@@ -34,8 +34,6 @@ alias gS="git stash"
 alias grm="git rebase origin/master"
 alias gri="git rebase -i"
 
-alias vault-uk="VAULT_ADDR=\"https://hashicorp-vault.test.euw2.ckint.io:6661\" vault login  -method=oidc -path=okta_oidc | grep 'token  ' | awk '{print \$2}' | tee .hvault.local.token"
-
 # pnpm
 set -gx PNPM_HOME "/Users/ck/Library/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
@@ -43,9 +41,9 @@ set -gx PATH "$PNPM_HOME" $PATH
 
 function update_theme --on-variable macOS_Theme
     if [ "$macOS_Theme" = "dark" ]
-        source "$HOME/.config/fish/themes/Zenbones Dark.fish"
+        # source "$HOME/.config/fish/themes/Zenbones Dark.fish"
     else if [ "$macOS_Theme" = "light" ]
-        source "$HOME/.config/fish/themes/Zenbones light.fish"
+        source "$HOME/.config/fish/themes/Kanagawa_Lotus.fish"
     end
 end
 
