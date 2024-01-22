@@ -14,16 +14,16 @@ end
 
 local config = {
    updater = {
-      remote = "origin", -- remote to use
-      channel = "stable", -- "stable" or "nightly"
-      version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-      branch = "nightly", -- branch name (NIGHTLY ONLY)
-      commit = nil, -- commit hash (NIGHTLY ONLY)
-      pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-      skip_prompts = false, -- skip prompts about breaking changes
+      remote = "origin",     -- remote to use
+      channel = "stable",    -- "stable" or "nightly"
+      version = "latest",    -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+      branch = "nightly",    -- branch name (NIGHTLY ONLY)
+      commit = nil,          -- commit hash (NIGHTLY ONLY)
+      pin_plugins = nil,     -- nil, true, false (nil will pin plugins on stable only)
+      skip_prompts = false,  -- skip prompts about breaking changes
       show_changelog = true, -- show the changelog after performing an update
-      auto_reload = false, -- automatically reload and sync packer after a successful update
-      auto_quit = false, -- automatically quit the current session after a successful update
+      auto_reload = false,   -- automatically reload and sync packer after a successful update
+      auto_quit = false,     -- automatically quit the current session after a successful update
    },
    lazy = {
       lockfile = vim.fn.stdpath("config") .. "/../astronvim/lazy-lock.json",
@@ -53,21 +53,21 @@ local config = {
       opt = {
          -- set to true or false etc.
          relativenumber = false, -- sets vim.opt.relativenumber
-         number = false, -- sets vim.opt.number
-         spell = false, -- sets vim.opt.spell
+         number = false,         -- sets vim.opt.number
+         spell = false,          -- sets vim.opt.spell
          -- signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-         wrap = true, -- sets vim.opt.wrap
+         wrap = true,            -- sets vim.opt.wrap
          showtabline = 0,
       },
       g = {
-         mapleader = " ", -- sets vim.g.mapleader
-         autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-         cmp_enabled = true, -- enable completion at start
-         autopairs_enabled = true, -- enable autopairs at start
-         diagnostics_enabled = true, -- enable diagnostics at start
+         mapleader = " ",                   -- sets vim.g.mapleader
+         autoformat_enabled = true,         -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+         cmp_enabled = true,                -- enable completion at start
+         autopairs_enabled = true,          -- enable autopairs at start
+         diagnostics_enabled = true,        -- enable diagnostics at start
          status_diagnostics_enabled = true, -- enable diagnostics in statusline
-         icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
-         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
+         icons_enabled = true,              -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+         ui_notifications_enabled = true,   -- disable notifications when toggling UI elements
          indent_blankline_show_current_context = true,
       },
    },
@@ -86,14 +86,14 @@ local config = {
       servers = {},
       formatting = {
          format_on_save = {
-            enabled = true, -- enable or disable format on save globally
-            allow_filetypes = { -- enable format on save for specified filetypes only
+            enabled = true,      -- enable or disable format on save globally
+            allow_filetypes = {  -- enable format on save for specified filetypes only
             },
             ignore_filetypes = { -- disable format on save for specified filetypes
                "markdown",
             },
          },
-         disabled = { -- disable formatting capabilities for the listed language servers
+         disabled = {       -- disable formatting capabilities for the listed language servers
          },
          timeout_ms = 1000, -- default format timeout
       },
@@ -184,7 +184,7 @@ local config = {
          },
       },
       ["p00f/nvim-ts-rainbow"] = { enabled = false },
-      { "astrotheme", enabled = false },
+      { "astrotheme",             enabled = false },
       -- { "rktjmp/shipwright.nvim", lazy = false },
       {
          "mcchrish/zenbones.nvim",
@@ -254,14 +254,17 @@ local config = {
       },
       {
          "goolord/alpha-nvim",
+         config = function()
+            require 'alpha'.setup(require 'alpha.themes.theta'.config)
+         end,
          opts = function(_, opts)
             opts.section.header.val = {
-               "                                                       _/                      ",
-               "   _/_/_/        _/_/        _/_/     _/      _/               _/_/_/  _/_/    ",
-               "  _/    _/    _/_/_/_/    _/    _/   _/      _/      _/       _/    _/    _/   ",
-               " _/    _/    _/          _/    _/     _/  _/        _/       _/    _/    _/    ",
-               "_/    _/      _/_/_/      _/_/         _/          _/       _/    _/    _/     ",
-               "                                                                               ",
+               [[                                  __]],
+               [[     ___     ___    ___   __  __ /\_\    ___ ___]],
+               [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
+               [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
+               [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+               [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
             }
          end,
       },
@@ -311,6 +314,10 @@ local config = {
          end,
       },
       {
+         "nvim-telescope/telescope-file-browser.nvim",
+         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+      },
+      {
          "mxsdev/nvim-dap-vscode-js",
       },
       {
@@ -344,6 +351,35 @@ local config = {
                      },
                   },
 
+                  preview = {
+                     mime_hook = function(filepath, bufnr, opts)
+                        local is_image = function(filepath)
+                           local image_extensions = { "png", "jpg", "jpeg" } -- Supported image formats
+                           local split_path = vim.split(filepath:lower(), ".", { plain = true })
+                           local extension = split_path[#split_path]
+                           return vim.tbl_contains(image_extensions, extension)
+                        end
+                        if is_image(filepath) then
+                           local term = vim.api.nvim_open_term(bufnr, {})
+                           local function send_output(_, data, _)
+                              for _, d in ipairs(data) do
+                                 vim.api.nvim_chan_send(term, d .. "\r\n")
+                              end
+                           end
+                           vim.fn.jobstart({
+                              "catimg",
+                              filepath, -- Terminal image viewer command
+                           }, { on_stdout = send_output, stdout_buffered = true, pty = true })
+                        else
+                           require("telescope.previewers.utils").set_preview_message(
+                              bufnr,
+                              opts.winid,
+                              "Binary cannot be previewed"
+                           )
+                        end
+                     end,
+                  },
+
                   mappings = {
                      i = {
                         ["<C-n>"] = actions.cycle_history_next,
@@ -358,19 +394,29 @@ local config = {
          end,
          keys = {
             -- goto
-            { "fd", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to definition" },
-            { "fR", "<cmd>Telescope lsp_references<cr>", desc = "Go to references" },
-            { "fi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
+            { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",     desc = "Go to definition" },
+            { "<leader>fR", "<cmd>Telescope lsp_references<cr>",      desc = "Go to references" },
+            { "<leader>fi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
+            { "<leader>fe", "<cmd>Telescope smart_open<cr>",          desc = "Colorscheme" },
+
+            { "<leader>aa", "<cmd>AerialToggle<cr>",                  desc = "Aerial Toggle" },
+            { "<leader>sa", "<cmd>Telescope aerial<cr>",              desc = "Colorscheme" },
             -- search
             -- { "sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
-            { "sc", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme" },
-            { "sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
-            { "sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-            { "sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
-            { "sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
-            { "sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-            { "sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-            { "sH", "<cmd>Telescope highlights<cr>", desc = "Highlight Groups" },
+            {
+               "<leader>sf",
+               "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>",
+               desc = "File browser",
+            },
+            { "<leader>ss", "<cmd>Telescope smart_open<cr>",  desc = "Smart open" },
+            { "<leader>sc", "<cmd>Telescope colorscheme<sr>", desc = "Colorscheme" },
+            { "<leader>sh", "<cmd>Telescope help_tags<cr>",   desc = "Find Help" },
+            { "<leader>sM", "<cmd>Telescope man_pages<cr>",   desc = "Man Pages" },
+            { "<leader>sr", "<cmd>Telescope oldfiles<cr>",    desc = "Open Recent File" },
+            { "<leader>sR", "<cmd>Telescope registers<cr>",   desc = "Registers" },
+            { "<leader>sk", "<cmd>Telescope keymaps<cr>",     desc = "Keymaps" },
+            { "<leader>sC", "<cmd>Telescope commands<cr>",    desc = "Commands" },
+            { "<leader>sH", "<cmd>Telescope highlights<cr>",  desc = "Highlight Groups" },
          },
          -- opts = function()
          --    return {
@@ -402,7 +448,7 @@ local config = {
          }
          return config -- return final config table
       end,
-      treesitter = { -- overrides `require("treesitter").setup(...)`
+      treesitter = {   -- overrides `require("treesitter").setup(...)`
          -- ensure_installed = { "lua" },
       },
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
@@ -411,7 +457,7 @@ local config = {
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
          ensure_installed = { "prettier", "stylua" },
       },
-      { "sindrets/diffview.nvim", lazy = false, dependencies = { "nvim-lua/plenary.nvim" } },
+      { "sindrets/diffview.nvim", lazy = false,   dependencies = { "nvim-lua/plenary.nvim" } },
    },
    luasnip = {
       -- Extend filetypes
@@ -445,6 +491,25 @@ local config = {
             require("xbase").setup({}) -- see default configuration bellow
          end,
       })
+
+      require("telescope").setup({
+         extensions = {
+            file_browser = {
+               -- theme = "ivy",
+               -- disables netrw and use telescope-file-browser in its place
+               hijack_netrw = true,
+               mappings = {
+                  ["i"] = {
+                     -- your custom insert mode mappings
+                  },
+                  ["n"] = {
+                     -- your custom normal mode mappings
+                  },
+               },
+            },
+         },
+      })
+      require("telescope").load_extension("file_browser")
 
       -- vim.api.nvim_create_augroup("js-debug", {})
       -- vim.api.nvim_create_autocmd("FileType", {
