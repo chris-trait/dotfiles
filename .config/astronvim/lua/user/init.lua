@@ -1,7 +1,9 @@
 local utils = require("user.utils")
+local theme_light = "kanagawa"
+local theme_dark = "kanagawa"
 local colorschemes = {
-   dark = "rose-pine",
-   light = "rose-pine",
+   dark = theme_dark,
+   light = theme_light,
 }
 local mode = "dark"
 
@@ -12,16 +14,16 @@ end
 
 local config = {
    updater = {
-      remote = "origin",     -- remote to use
-      channel = "stable",    -- "stable" or "nightly"
-      version = "latest",    -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-      branch = "nightly",    -- branch name (NIGHTLY ONLY)
-      commit = nil,          -- commit hash (NIGHTLY ONLY)
-      pin_plugins = nil,     -- nil, true, false (nil will pin plugins on stable only)
-      skip_prompts = false,  -- skip prompts about breaking changes
+      remote = "origin", -- remote to use
+      channel = "stable", -- "stable" or "nightly"
+      version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+      branch = "nightly", -- branch name (NIGHTLY ONLY)
+      commit = nil, -- commit hash (NIGHTLY ONLY)
+      pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
+      skip_prompts = false, -- skip prompts about breaking changes
       show_changelog = true, -- show the changelog after performing an update
-      auto_reload = false,   -- automatically reload and sync packer after a successful update
-      auto_quit = false,     -- automatically quit the current session after a successful update
+      auto_reload = false, -- automatically reload and sync packer after a successful update
+      auto_quit = false, -- automatically quit the current session after a successful update
    },
    lazy = {
       lockfile = vim.fn.stdpath("config") .. "/../astronvim/lazy-lock.json",
@@ -29,19 +31,19 @@ local config = {
    colorscheme = colorschemes[mode],
    highlights = {
       ["rose-pine"] = {
-         IndentBlanklineChar = { 
+         IndentBlanklineChar = {
             fg = mode == "dark" and "#44415a" or "#dfdad9",
          },
-         IndentBlanklineSpaceChar = { 
+         IndentBlanklineSpaceChar = {
             fg = mode == "dark" and "#44415a" or "#dfdad9",
          },
-         IndentBlanklineSpaceCharBlankline = { 
+         IndentBlanklineSpaceCharBlankline = {
             fg = mode == "dark" and "#44415a" or "#dfdad9",
          },
-         IndentBlanklineIndent1 = { 
+         IndentBlanklineIndent1 = {
             fg = mode == "dark" and "#44415a" or "#dfdad9",
          },
-         IndentBlanklineIndent2 = { 
+         IndentBlanklineIndent2 = {
             fg = mode == "dark" and "#44415a" or "#dfdad9",
          },
       },
@@ -51,21 +53,21 @@ local config = {
       opt = {
          -- set to true or false etc.
          relativenumber = false, -- sets vim.opt.relativenumber
-         number = false,         -- sets vim.opt.number
-         spell = false,          -- sets vim.opt.spell
+         number = false, -- sets vim.opt.number
+         spell = false, -- sets vim.opt.spell
          -- signcolumn = "auto", -- sets vim.opt.signcolumn to auto
-         wrap = true,            -- sets vim.opt.wrap
+         wrap = true, -- sets vim.opt.wrap
          showtabline = 0,
       },
       g = {
-         mapleader = " ",                   -- sets vim.g.mapleader
-         autoformat_enabled = true,         -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-         cmp_enabled = true,                -- enable completion at start
-         autopairs_enabled = true,          -- enable autopairs at start
-         diagnostics_enabled = true,        -- enable diagnostics at start
+         mapleader = " ", -- sets vim.g.mapleader
+         autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+         cmp_enabled = true, -- enable completion at start
+         autopairs_enabled = true, -- enable autopairs at start
+         diagnostics_enabled = true, -- enable diagnostics at start
          status_diagnostics_enabled = true, -- enable diagnostics in statusline
-         icons_enabled = true,              -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
-         ui_notifications_enabled = true,   -- disable notifications when toggling UI elements
+         icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
          indent_blankline_show_current_context = true,
       },
    },
@@ -84,14 +86,14 @@ local config = {
       servers = {},
       formatting = {
          format_on_save = {
-            enabled = true,      -- enable or disable format on save globally
-            allow_filetypes = {  -- enable format on save for specified filetypes only
+            enabled = true, -- enable or disable format on save globally
+            allow_filetypes = { -- enable format on save for specified filetypes only
             },
             ignore_filetypes = { -- disable format on save for specified filetypes
                "markdown",
             },
          },
-         disabled = {       -- disable formatting capabilities for the listed language servers
+         disabled = { -- disable formatting capabilities for the listed language servers
          },
          timeout_ms = 1000, -- default format timeout
       },
@@ -107,8 +109,7 @@ local config = {
          ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
          ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
          -- dap
-         ["<leader>d"] = { function()
-         end, desc = "+Debug" },
+         ["<leader>d"] = { function() end, desc = "+Debug" },
          -- ["<leader>dd"] = { "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle breakpoint" },
          -- ["<leader>dc"] = { "<cmd>DapContinue<cr>", desc = "Continue" },
          -- ["<leader>di"] = { "<cmd>DapStepInto<cr>", desc = "Step into" },
@@ -168,8 +169,22 @@ local config = {
    },
    -- Configure plugins
    plugins = {
+      {
+         "danielfalk/smart-open.nvim",
+         branch = "0.2.x",
+         config = function()
+            require("telescope").load_extension("smart_open")
+         end,
+         dependencies = {
+            "kkharji/sqlite.lua",
+            -- Only required if using match_algorithm fzf
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+            { "nvim-telescope/telescope-fzy-native.nvim" },
+         },
+      },
       ["p00f/nvim-ts-rainbow"] = { enabled = false },
-      { "astrotheme",             enabled = false },
+      { "astrotheme", enabled = false },
       -- { "rktjmp/shipwright.nvim", lazy = false },
       {
          "mcchrish/zenbones.nvim",
@@ -186,7 +201,56 @@ local config = {
             require("rose-pine").setup({
                -- dark_variant = 'moon',
             })
-         end
+         end,
+      },
+      {
+         "rebelot/kanagawa.nvim",
+         lazy = false,
+         priority = 1000,
+         config = function()
+            require("kanagawa").setup({
+               colors = {
+                  all = {
+                     ui = {
+                        bg_gutter = "none",
+                     },
+                  },
+               },
+               overrides = function(colors)
+                  local theme = colors.theme
+                  return {
+                     LineNr = { bg = "none" },
+                     SignColumn = { bg = "none" },
+                     FoldColumn = { bg = "none" },
+
+                     -- NormalFloat = { bg = "none" },
+                     -- FloatBorder = { bg = "none" },
+                     -- FloatTitle = { bg = "none" },
+
+                     -- Save an hlgroup with dark background and dimmed foreground
+                     -- so that you can use it where your still want darker windows.
+                     -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+                     -- NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+
+                     -- Popular plugins that open floats will link to NormalFloat by default;
+                     -- set their background accordingly if you wish to keep them dark and borderless
+                     LazyNormal = { bg = theme.ui.bg_m3 },
+                     MasonNormal = { bg = theme.ui.bg_m3, fg },
+                     Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+                     PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+                     PmenuSbar = { bg = theme.ui.bg_m1 },
+                     PmenuThumb = { bg = theme.ui.bg_p2 },
+                     TelescopeTitle = { fg = theme.ui.special, bold = true },
+                     TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+                     TelescopePromptBorder = { bg = theme.ui.bg_p1 },
+                     TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+                     TelescopeResultsBorder = { bg = theme.ui.bg_m1 },
+                     TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+                     TelescopePreviewBorder = { bg = theme.ui.bg_dim },
+                  }
+               end,
+            })
+         end,
       },
       {
          "goolord/alpha-nvim",
@@ -212,14 +276,14 @@ local config = {
          "cormacrelf/dark-notify",
          lazy = false,
          config = function()
-           if require("user.utils").get_os() == "darwin" then
-              require("dark_notify").run({
-                 schemes = {
-                    dark = "rose-pine",
-                    light = "rose-pine",
-                 },
-              })
-           end
+            if require("user.utils").get_os() == "darwin" then
+               require("dark_notify").run({
+                  schemes = {
+                     dark = theme_dark,
+                     light = theme_light,
+                  },
+               })
+            end
          end,
       },
       {
@@ -250,6 +314,73 @@ local config = {
          "mxsdev/nvim-dap-vscode-js",
       },
       {
+         "nvim-telescope/telescope.nvim",
+         version = false,
+         opts = function()
+            local actions = require("telescope.actions")
+            local get_icon = require("astronvim.utils").get_icon
+            return {
+               defaults = {
+                  git_worktrees = vim.g.git_worktrees,
+                  prompt_prefix = string.format("%s ", get_icon("Search")),
+                  selection_caret = string.format("%s ", get_icon("Selected")),
+                  path_display = { "truncate" },
+                  sorting_strategy = "ascending",
+                  layout_config = {
+                     horizontal = {
+                        prompt_position = "top",
+                        preview_width = 0.55,
+                     },
+                     vertical = {
+                        mirror = false,
+                     },
+                     width = 0.87,
+                     height = 0.80,
+                     preview_cutoff = 120,
+                  },
+                  pickers = {
+                     oldfiles = {
+                        cwd_only = true,
+                     },
+                  },
+
+                  mappings = {
+                     i = {
+                        ["<C-n>"] = actions.cycle_history_next,
+                        ["<C-p>"] = actions.cycle_history_prev,
+                        ["<C-j>"] = actions.move_selection_next,
+                        ["<C-k>"] = actions.move_selection_previous,
+                     },
+                     n = { ["q"] = actions.close },
+                  },
+               },
+            }
+         end,
+         keys = {
+            -- goto
+            { "fd", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to definition" },
+            { "fR", "<cmd>Telescope lsp_references<cr>", desc = "Go to references" },
+            { "fi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
+            -- search
+            -- { "sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
+            { "sc", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme" },
+            { "sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
+            { "sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+            { "sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
+            { "sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
+            { "sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
+            { "sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+            { "sH", "<cmd>Telescope highlights<cr>", desc = "Highlight Groups" },
+         },
+         -- opts = function()
+         --    return {
+         --       defaults = {
+         --          -- borderchars = {"▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼",  }
+         --       }
+         --    }
+         -- end
+      },
+      {
          "xbase-lab/xbase",
          run = "make install", -- make free_space (not recommended, longer build time)
          dependencies = {
@@ -271,7 +402,7 @@ local config = {
          }
          return config -- return final config table
       end,
-      treesitter = {   -- overrides `require("treesitter").setup(...)`
+      treesitter = { -- overrides `require("treesitter").setup(...)`
          -- ensure_installed = { "lua" },
       },
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
@@ -280,7 +411,7 @@ local config = {
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
          ensure_installed = { "prettier", "stylua" },
       },
-      { "sindrets/diffview.nvim", lazy = false,   dependencies = { "nvim-lua/plenary.nvim" } },
+      { "sindrets/diffview.nvim", lazy = false, dependencies = { "nvim-lua/plenary.nvim" } },
    },
    luasnip = {
       -- Extend filetypes

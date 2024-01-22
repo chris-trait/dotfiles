@@ -41,22 +41,22 @@ local function format_tab_title(tab, tabs, panes, config, hover, max_width)
 
 	if tab.is_active then
 		return {
-				{ Background = { Color = active.bg_color } },
-				{ Foreground = { Color = active.fg_color } },
-				{ Attribute = { Intensity = "Bold" } },
-				{ Text = title },
+			{ Background = { Color = active.bg_color } },
+			{ Foreground = { Color = active.fg_color } },
+			{ Attribute = { Intensity = "Bold" } },
+			{ Text = title },
 		}
 	elseif hover then
 		return {
-				{ Background = { Color = palette.tab_bar.inactive_tab_hover.bg_color } },
-				{ Foreground = { Color = palette.tab_bar.inactive_tab_hover.fg_color } },
-				{ Text = title },
+			{ Background = { Color = palette.tab_bar.inactive_tab_hover.bg_color } },
+			{ Foreground = { Color = palette.tab_bar.inactive_tab_hover.fg_color } },
+			{ Text = title },
 		}
 	else
 		return {
-				{ Background = { Color = inactive.bg_color } },
-				{ Foreground = { Color = inactive.fg_color } },
-				{ Text = title },
+			{ Background = { Color = inactive.bg_color } },
+			{ Foreground = { Color = inactive.fg_color } },
+			{ Text = title },
 		}
 	end
 end
@@ -68,9 +68,9 @@ function M.setup(options)
 	end
 
 	options = {
-			sync = should_sync,
-			colors = options.colors,
-			mode = options.mode or "dark",
+		sync = should_sync,
+		colors = options.colors,
+		mode = options.mode or "dark",
 	}
 
 	-- https://wezfurlong.org/wezterm/config/lua/window/get_appearance.html#windowget_appearance

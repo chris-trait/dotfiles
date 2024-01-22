@@ -1,4 +1,8 @@
 local wezterm = require("wezterm")
+
+local kanagawa_wave = require("kanagawa-wave")
+local kanagawa_lotus = require("kanagawa-lotus")
+
 local rose_pine = require("rose-pine")
 local rose_pine_dawn = require("rose-pine-dawn")
 local colorsync = require("colors")
@@ -7,24 +11,24 @@ local colors = colorsync.setup({
 	should_sync = true,
 	-- mode = "light",
 	colors = {
-		light = rose_pine_dawn.colors(),
-		dark = rose_pine.colors(),
+		light = kanagawa_lotus.colors(),
+		dark = kanagawa_wave.colors(),
 	},
 })
 
 local mykeys = {
-	{ key = "-",   mods = "LEADER",     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{
 		key = "\\",
 		mods = "LEADER",
 		action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
 	},
-	{ key = "z",   mods = "LEADER",     action = "TogglePaneZoomState" },
-	{ key = "c",   mods = "LEADER",     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
-	{ key = "Tab", mods = "CTRL",       action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
+	{ key = "c", mods = "LEADER", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
+	{ key = "Tab", mods = "CTRL", action = wezterm.action({ ActivateTabRelative = 1 }) },
 	{ key = "Tab", mods = "SHIFT|CTRL", action = wezterm.action({ ActivateTabRelative = -1 }) },
-	{ key = "n",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = 1 }) },
-	{ key = "p",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = -1 }) },
+	{ key = "n", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "p", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = -1 }) },
 }
 
 for i = 1, 8 do
@@ -41,6 +45,7 @@ return {
 		"Symbols Nerd Font",
 	}),
 	font_size = 20.0,
+	force_reverse_video_cursor = true,
 	debug_key_events = true,
 	colors = colors,
 	window_decorations = "RESIZE",
