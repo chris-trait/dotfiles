@@ -4,14 +4,14 @@ WINDOW_GAP="0"
 PADDING="0"
 
 if [ "$1" == "off" ]; then
-    WINDOW_GAP=3
-    PADDING=3
+    WINDOW_GAP=4
+    PADDING=4
 elif [ "$1" == "small" ]; then
     WINDOW_GAP=16
-    PADDING=16
+    PADDING=24
 elif [ "$1" == "large" ]; then
-    WINDOW_GAP=32
-    PADDING=64
+    WINDOW_GAP=24
+    PADDING=48
 elif [ "$1" == "zen" ]; then
     WINDOW_GAP=32
     PADDING=128

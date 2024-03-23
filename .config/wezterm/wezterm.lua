@@ -2,18 +2,20 @@ local wezterm = require("wezterm")
 local kanagawa_wave = require("kanagawa-wave")
 local kanagawa_lotus = require("kanagawa-lotus")
 
-local rose_pine = require("rose-pine")
-local rose_pine_dawn = require("rose-pine-dawn")
-local colorsync = require("colors")
+function get_appearance()
+	if wezterm.gui then
+		return wezterm.gui.get_appearance()
+	end
+	return 'Dark'
+end
 
-local colors = colorsync.setup({
-	should_sync = true,
-	-- mode = "light",
-	colors = {
-		light = kanagawa_lotus.colors(),
-		dark = kanagawa_wave.colors(),
-	},
-})
+function scheme_for_appearance(appearance)
+	if appearance:find 'Dark' then
+		return 'Kanagawa Dark'
+	else
+		return 'Kanagawa Light'
+	end
+end
 
 local mykeys = {
 	{ key = "-",   mods = "LEADER",     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
@@ -46,7 +48,12 @@ return {
 	font_size = 18.0,
 	force_reverse_video_cursor = true,
 	debug_key_events = true,
-	colors = colors,
+	color_schemes = {
+		["Kanagawa Dark"] = kanagawa_wave,
+		["Kanagawa Light"] = kanagawa_lotus
+	},
+	color_scheme = scheme_for_appearance(get_appearance()),
+	-- colors = colors,
 	window_decorations = "RESIZE",
 	window_padding = {
 		left = 0,

@@ -23,4 +23,7 @@ if [[ "$SHELL" != "$(which fish)" ]]; then
     fisher install PatrickF1/fzf.fish
 fi
 
+defaults write com.apple.finder CreateDesktop false 
+killall Finder
+
 echo "Done."
