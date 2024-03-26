@@ -78,9 +78,42 @@ local config = {
    },
    lsp = {
       setup_handlers = {
-         tsserver = function(_, opts)
-            require("typescript").setup({ server = opts })
+         tsserver = function()
+         end
+         -- tsserver = function(_, opts)
+         --    require("typescript").setup({ server = opts })
+         -- end,
+      },
+      config = {
+         vtsls = function() 
+            return require("vtsls").lspconfig
          end,
+         ["typescript-tools"] = { -- enable inlay hints by default for `typescript-tools`
+            settings = {
+               separate_diagnostic_server = true,
+               complete_function_calls = true,
+               tsserver_max_memory = "auto",
+               code_lens = "all",
+               tsserver_file_preferences = {
+                 includeInlayParameterNameHints = "all",
+                 includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                 includeInlayFunctionParameterTypeHints = true,
+                 includeInlayVariableTypeHints = true,
+                 includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                 includeInlayPropertyDeclarationTypeHints = true,
+                 includeInlayFunctionLikeReturnTypeHints = true,
+                 includeInlayEnumMemberValueHints = true,
+               },
+               tsserver_plugins = {
+                 "@styled/typescript-styled-plugin",
+               },
+               expose_as_code_action = "all",
+               jsx_close_tag = {
+                 enable = true,
+                 filetypes = { "javascriptreact", "typescriptreact" },
+               },
+            },
+         }
       },
       skip_setup = {},
       servers = {},
@@ -94,6 +127,7 @@ local config = {
             },
          },
          disabled = {       -- disable formatting capabilities for the listed language servers
+            "tsserver"
          },
          timeout_ms = 1000, -- default format timeout
       },
@@ -172,9 +206,6 @@ local config = {
       {
          "danielfalk/smart-open.nvim",
          branch = "0.2.x",
-         config = function()
-            require("telescope").load_extension("smart_open")
-         end,
          dependencies = {
             "kkharji/sqlite.lua",
             -- Only required if using match_algorithm fzf
@@ -275,20 +306,36 @@ local config = {
          end,
          keys = require("user.plugin.hop").keys,
       },
+      { 'yioneko/nvim-vtsls', requires = { 'neovim/nvim-lspconfig' } },
       {
-         "cormacrelf/dark-notify",
-         lazy = false,
-         config = function()
-            if require("user.utils").get_os() == "darwin" then
-               require("dark_notify").run({
-                  schemes = {
-                     dark = theme_dark,
-                     light = theme_light,
-                  },
-               })
-            end
-         end,
+         "pmizio/typescript-tools.nvim",
+         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+         ft = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+         -- get AstroLSP provided options like `on_attach` and `capabilities`
+         opts = function()
+            local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
+            if astrolsp_avail then return astrolsp.lsp_opts "typescript-tools" end
+          end,
+          keys = {
+            { "<leader>lu", "<cmd>TSToolsRemoveUnusedImports<cr>",     desc = "Remove unused statements" },
+            { "<leader>lU", "<cmd>TSToolsRemoveUnused<cr>",     desc = "Remove unused statements" },
+            { "<leader>li", "<cmd>TSToolsAddMissingImports<cr>",     desc = "Remove unused statements" },
+          }
       },
+      -- {
+      --    "cormacrelf/dark-notify",
+      --    lazy = false,
+      --    config = function()
+      --       if require("user.utils").get_os() == "darwin" then
+      --          require("dark_notify").run({
+      --             schemes = {
+      --                dark = theme_dark,
+      --                light = theme_light,
+      --             },
+      --          })
+      --       end
+      --    end,
+      -- },
       {
          "ruifm/gitlinker.nvim",
          config = function()
@@ -323,82 +370,69 @@ local config = {
       {
          "nvim-telescope/telescope.nvim",
          version = false,
-         opts = function()
-            local actions = require("telescope.actions")
-            local get_icon = require("astronvim.utils").get_icon
-            return {
-               defaults = {
-                  git_worktrees = vim.g.git_worktrees,
-                  prompt_prefix = string.format("%s ", get_icon("Search")),
-                  selection_caret = string.format("%s ", get_icon("Selected")),
-                  path_display = { "truncate" },
-                  sorting_strategy = "ascending",
-                  layout_config = {
-                     horizontal = {
-                        prompt_position = "top",
-                        preview_width = 0.55,
-                     },
-                     vertical = {
-                        mirror = false,
-                     },
-                     width = 0.87,
-                     height = 0.80,
-                     preview_cutoff = 120,
-                  },
-                  pickers = {
-                     oldfiles = {
-                        cwd_only = true,
-                     },
-                  },
-
-                  preview = {
-                     mime_hook = function(filepath, bufnr, opts)
-                        local is_image = function(filepath)
-                           local image_extensions = { "png", "jpg", "jpeg" } -- Supported image formats
-                           local split_path = vim.split(filepath:lower(), ".", { plain = true })
-                           local extension = split_path[#split_path]
-                           return vim.tbl_contains(image_extensions, extension)
-                        end
-                        if is_image(filepath) then
-                           local term = vim.api.nvim_open_term(bufnr, {})
-                           local function send_output(_, data, _)
-                              for _, d in ipairs(data) do
-                                 vim.api.nvim_chan_send(term, d .. "\r\n")
-                              end
-                           end
-                           vim.fn.jobstart({
-                              "catimg",
-                              filepath, -- Terminal image viewer command
-                           }, { on_stdout = send_output, stdout_buffered = true, pty = true })
-                        else
-                           require("telescope.previewers.utils").set_preview_message(
-                              bufnr,
-                              opts.winid,
-                              "Binary cannot be previewed"
-                           )
-                        end
-                     end,
-                  },
-
+         opts = {
+            extensions = {
+               smart_open = {
+                  show_scores = true,
+                  open_buffer_indicators = {previous = "👀", others = "🙈"},
+               },
+               file_browser = {
+                  -- theme = "ivy",
+                  -- disables netrw and use telescope-file-browser in its place
+                  hijack_netrw = true,
                   mappings = {
-                     i = {
-                        ["<C-n>"] = actions.cycle_history_next,
-                        ["<C-p>"] = actions.cycle_history_prev,
-                        ["<C-j>"] = actions.move_selection_next,
-                        ["<C-k>"] = actions.move_selection_previous,
+                     ["i"] = {
+                        -- your custom insert mode mappings
                      },
-                     n = { ["q"] = actions.close },
+                     ["n"] = {
+                        -- your custom normal mode mappings
+                     },
                   },
                },
+            },
+            defaults = {
+               preview = {
+                  mime_hook = function(filepath, bufnr, opts)
+                     local is_image = function(filepath)
+                        local image_extensions = { "png", "jpg", "jpeg" } -- Supported image formats
+                        local split_path = vim.split(filepath:lower(), ".", { plain = true })
+                        local extension = split_path[#split_path]
+                        return vim.tbl_contains(image_extensions, extension)
+                     end
+                     if is_image(filepath) then
+                        local term = vim.api.nvim_open_term(bufnr, {})
+                        local function send_output(_, data, _)
+                           for _, d in ipairs(data) do
+                              vim.api.nvim_chan_send(term, d .. "\r\n")
+                           end
+                        end
+                        vim.fn.jobstart({
+                           "catimg",
+                           filepath, -- Terminal image viewer command
+                        }, { on_stdout = send_output, stdout_buffered = true, pty = true })
+                     else
+                        require("telescope.previewers.utils").set_preview_message(
+                           bufnr,
+                           opts.winid,
+                           "Binary cannot be previewed"
+                        )
+                     end
+                  end
+               }
             }
-         end,
+         },
          keys = {
             -- goto
             { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",     desc = "Go to definition" },
-            { "<leader>fR", "<cmd>Telescope lsp_references<cr>",      desc = "Go to references" },
+            { "<leader>fr", "<cmd>Telescope lsp_references<cr>",      desc = "Go to references" },
             { "<leader>fi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
-            { "<leader>fe", "<cmd>Telescope smart_open<cr>",          desc = "Colorscheme" },
-
+            { 
+               "<leader>fe", 
+               function () 
+                  require("telescope").extensions.smart_open.smart_open()
+               end,          
+               desc = "Colorscheme" 
+            },
             { "<leader>aa", "<cmd>AerialToggle<cr>",                  desc = "Aerial Toggle" },
             { "<leader>sa", "<cmd>Telescope aerial<cr>",              desc = "Colorscheme" },
             -- search
@@ -417,6 +451,9 @@ local config = {
             { "<leader>sk", "<cmd>Telescope keymaps<cr>",     desc = "Keymaps" },
             { "<leader>sC", "<cmd>Telescope commands<cr>",    desc = "Commands" },
             { "<leader>sH", "<cmd>Telescope highlights<cr>",  desc = "Highlight Groups" },
+
+            { "<leader>lr", vim.lsp.buf.rename, desc = "Rename"},
+            { "<leader>lR", vim.lsp.buf.references, desc = "References"},
          },
          -- opts = function()
          --    return {
@@ -452,7 +489,7 @@ local config = {
          -- ensure_installed = { "lua" },
       },
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-         ensure_installed = { "sumneko_lua", "tsserver", "rust_analyzer", "sourcekit" },
+         ensure_installed = { "sumneko_lua", "tsserver", "rust_analyzer", "sourcekit", "vtsls" },
       },
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
          ensure_installed = { "prettier", "stylua" },
@@ -492,24 +529,8 @@ local config = {
          end,
       })
 
-      require("telescope").setup({
-         extensions = {
-            file_browser = {
-               -- theme = "ivy",
-               -- disables netrw and use telescope-file-browser in its place
-               hijack_netrw = true,
-               mappings = {
-                  ["i"] = {
-                     -- your custom insert mode mappings
-                  },
-                  ["n"] = {
-                     -- your custom normal mode mappings
-                  },
-               },
-            },
-         },
-      })
       require("telescope").load_extension("file_browser")
+      require("telescope").load_extension("smart_open")
 
       -- vim.api.nvim_create_augroup("js-debug", {})
       -- vim.api.nvim_create_autocmd("FileType", {

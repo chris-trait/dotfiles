@@ -65,4 +65,6 @@ return {
 	-- Keyboard mapping
 	leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
 	keys = mykeys,
+	window_background_opacity = 1,
+	macos_window_background_blur = 30
 }
