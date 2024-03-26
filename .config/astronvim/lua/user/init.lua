@@ -184,7 +184,7 @@ local config = {
          },
       },
       ["p00f/nvim-ts-rainbow"] = { enabled = false },
-      { "astrotheme",             enabled = false },
+      { "astrotheme",               enabled = false },
       -- { "rktjmp/shipwright.nvim", lazy = false },
       {
          "mcchrish/zenbones.nvim",
@@ -197,12 +197,14 @@ local config = {
       {
          "rose-pine/nvim",
          name = "rose-pine",
+         lazy = false,
          config = function()
             require("rose-pine").setup({
                -- dark_variant = 'moon',
             })
          end,
       },
+      { "ellisonleao/gruvbox.nvim", lazy = false,   priority = 1000, config = true, opts = {} },
       {
          "rebelot/kanagawa.nvim",
          lazy = false,
@@ -457,7 +459,7 @@ local config = {
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
          ensure_installed = { "prettier", "stylua" },
       },
-      { "sindrets/diffview.nvim", lazy = false,   dependencies = { "nvim-lua/plenary.nvim" } },
+      { "sindrets/diffview.nvim", lazy = false, dependencies = { "nvim-lua/plenary.nvim" } },
    },
    luasnip = {
       -- Extend filetypes
