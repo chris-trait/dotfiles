@@ -85,9 +85,9 @@ local config = {
          -- end,
       },
       config = {
-         vtsls = function() 
-            return require("vtsls").lspconfig
-         end,
+         -- vtsls = function()
+         --    return require("vtsls").lspconfig
+         -- end,
          ["typescript-tools"] = { -- enable inlay hints by default for `typescript-tools`
             settings = {
                separate_diagnostic_server = true,
@@ -95,22 +95,22 @@ local config = {
                tsserver_max_memory = "auto",
                code_lens = "all",
                tsserver_file_preferences = {
-                 includeInlayParameterNameHints = "all",
-                 includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                 includeInlayFunctionParameterTypeHints = true,
-                 includeInlayVariableTypeHints = true,
-                 includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                 includeInlayPropertyDeclarationTypeHints = true,
-                 includeInlayFunctionLikeReturnTypeHints = true,
-                 includeInlayEnumMemberValueHints = true,
+                  includeInlayParameterNameHints = "all",
+                  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+                  includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayEnumMemberValueHints = true,
                },
                tsserver_plugins = {
-                 "@styled/typescript-styled-plugin",
+                  "@styled/typescript-styled-plugin",
                },
                expose_as_code_action = "all",
                jsx_close_tag = {
-                 enable = true,
-                 filetypes = { "javascriptreact", "typescriptreact" },
+                  enable = true,
+                  filetypes = { "javascriptreact", "typescriptreact" },
                },
             },
          }
@@ -126,7 +126,7 @@ local config = {
                "markdown",
             },
          },
-         disabled = {       -- disable formatting capabilities for the listed language servers
+         disabled = { -- disable formatting capabilities for the listed language servers
             "tsserver"
          },
          timeout_ms = 1000, -- default format timeout
@@ -308,7 +308,7 @@ local config = {
          end,
          keys = require("user.plugin.hop").keys,
       },
-      { 'yioneko/nvim-vtsls', requires = { 'neovim/nvim-lspconfig' } },
+      -- { 'yioneko/nvim-vtsls', requires = { 'neovim/nvim-lspconfig' } },
       {
          "pmizio/typescript-tools.nvim",
          dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -317,12 +317,12 @@ local config = {
          opts = function()
             local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
             if astrolsp_avail then return astrolsp.lsp_opts "typescript-tools" end
-          end,
-          keys = {
-            { "<leader>lu", "<cmd>TSToolsRemoveUnusedImports<cr>",     desc = "Remove unused statements" },
-            { "<leader>lU", "<cmd>TSToolsRemoveUnused<cr>",     desc = "Remove unused statements" },
-            { "<leader>li", "<cmd>TSToolsAddMissingImports<cr>",     desc = "Remove unused statements" },
-          }
+         end,
+         keys = {
+            { "<leader>lu", "<cmd>TSToolsRemoveUnusedImports<cr>", desc = "Remove unused statements" },
+            { "<leader>lU", "<cmd>TSToolsRemoveUnused<cr>",        desc = "Remove unused statements" },
+            { "<leader>li", "<cmd>TSToolsAddMissingImports<cr>",   desc = "Remove unused statements" },
+         }
       },
       -- {
       --    "cormacrelf/dark-notify",
@@ -376,7 +376,7 @@ local config = {
             extensions = {
                smart_open = {
                   show_scores = true,
-                  open_buffer_indicators = {previous = "👀", others = "🙈"},
+                  open_buffer_indicators = { previous = "👀", others = "🙈" },
                },
                file_browser = {
                   -- theme = "ivy",
@@ -428,15 +428,15 @@ local config = {
             { "<leader>fd", "<cmd>Telescope lsp_definitions<cr>",     desc = "Go to definition" },
             { "<leader>fr", "<cmd>Telescope lsp_references<cr>",      desc = "Go to references" },
             { "<leader>fi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to implementations" },
-            { 
-               "<leader>fe", 
-               function () 
+            {
+               "<leader>fe",
+               function()
                   require("telescope").extensions.smart_open.smart_open()
-               end,          
-               desc = "Colorscheme" 
+               end,
+               desc = "Colorscheme"
             },
-            { "<leader>aa", "<cmd>AerialToggle<cr>",                  desc = "Aerial Toggle" },
-            { "<leader>sa", "<cmd>Telescope aerial<cr>",              desc = "Colorscheme" },
+            { "<leader>aa", "<cmd>AerialToggle<cr>",     desc = "Aerial Toggle" },
+            { "<leader>sa", "<cmd>Telescope aerial<cr>", desc = "Colorscheme" },
             -- search
             -- { "sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
             {
@@ -454,8 +454,8 @@ local config = {
             { "<leader>sC", "<cmd>Telescope commands<cr>",    desc = "Commands" },
             { "<leader>sH", "<cmd>Telescope highlights<cr>",  desc = "Highlight Groups" },
 
-            { "<leader>lr", vim.lsp.buf.rename, desc = "Rename"},
-            { "<leader>lR", vim.lsp.buf.references, desc = "References"},
+            { "<leader>lr", vim.lsp.buf.rename,               desc = "Rename" },
+            { "<leader>lR", vim.lsp.buf.references,           desc = "References" },
          },
          -- opts = function()
          --    return {
@@ -491,7 +491,7 @@ local config = {
          -- ensure_installed = { "lua" },
       },
       ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-         ensure_installed = { "sumneko_lua", "tsserver", "rust_analyzer", "sourcekit", "vtsls" },
+         ensure_installed = { "sumneko_lua", "rust_analyzer", "sourcekit" },
       },
       ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
          ensure_installed = { "prettier", "stylua" },
