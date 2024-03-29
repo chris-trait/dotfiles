@@ -7,6 +7,7 @@ set -x ANDROID_HOME $HOME/Library/Android/sdk
 set -x PINENTRY_USER_DATA USE_CURSES=0
 set fish_greeting
 
+fish_add_path -m /opt/homebrew/bin
 fish_add_path -m $HOME/.brew/bin
 fish_add_path -m $HOME/Library/Application\ Support/Coursier/bin
 fish_add_path -m $HOME/.cargo/bin
@@ -54,17 +55,3 @@ if [ "$system_theme" = "Dark" ];
 else;
   set -U macOS_Theme "light"
 end
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if test -f /opt/homebrew/Caskroom/miniconda/base/bin/conda
-    eval /opt/homebrew/Caskroom/miniconda/base/bin/conda "shell.fish" "hook" $argv | source
-else
-    if test -f "/opt/homebrew/Caskroom/miniconda/base/etc/fish/conf.d/conda.fish"
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/fish/conf.d/conda.fish"
-    else
-        set -x PATH "/opt/homebrew/Caskroom/miniconda/base/bin" $PATH
-    end
-end
-# <<< conda initialize <<<
-
