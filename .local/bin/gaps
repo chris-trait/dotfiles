@@ -1,21 +1,41 @@
 #!/usr/bin/env sh
 
-WINDOW_GAP="0"
-PADDING="0"
+GAP="0"
+PL="0"
+PT="0"
+PR="0"
+PB="0"
 
 if [ "$1" == "off" ]; then
-    WINDOW_GAP=3
-    PADDING=3
+    GAP=3
+    PL=3
+    PT=3
+    PR=3
+    PB=3
 elif [ "$1" == "small" ]; then
-    WINDOW_GAP=24
-    PADDING=12
-    yabai -m config left_padding 72
+    GAP=24
+    PL=64
+    PT=12
+    PR=12
+    PB=12
+elif [ "$1" == "medium" ]; then
+    GAP=32
+    PL=76
+    PT=24
+    PR=24
+    PB=24
 elif [ "$1" == "large" ]; then
-    WINDOW_GAP=32
-    PADDING=64
+    GAP=32
+    PL=116
+    PT=64
+    PR=64
+    PB=64
 elif [ "$1" == "zen" ]; then
-    WINDOW_GAP=32
-    PADDING=128
+    GAP=32
+    PL=180
+    PT=128
+    PR=128
+    PB=128
 else
     WINDOW_GAP=$1
     PADDING=$1
@@ -24,7 +44,8 @@ else
     fi
 fi
 
-yabai -m config window_gap     $WINDOW_GAP
-yabai -m config top_padding    $PADDING
-yabai -m config bottom_padding $PADDING
-yabai -m config right_padding  $PADDING
+yabai -m config window_gap     $GAP
+yabai -m config left_padding   $PL
+yabai -m config top_padding    $PT
+yabai -m config right_padding  $PR
+yabai -m config bottom_padding $PB

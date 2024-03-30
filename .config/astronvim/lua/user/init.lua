@@ -1,6 +1,6 @@
 local utils = require("user.utils")
-local theme_light = "kanagawa"
-local theme_dark = "kanagawa"
+local theme_light = "tokyonight"
+local theme_dark = "tokyonight"
 local colorschemes = {
    dark = theme_dark,
    light = theme_light,
@@ -132,7 +132,6 @@ local config = {
       },
    },
    mappings = {
-      -- first key is the mode
       n = {
          ["K"] = { vim.lsp.buf.hover, desc = "Hover" },
          ["<leader>lh"] = { vim.lsp.buf.signature_help, desc = "Signature help" },
@@ -200,22 +199,18 @@ local config = {
          -- hop
       },
    },
-   -- Configure plugins
    plugins = {
       {
          "danielfalk/smart-open.nvim",
          branch = "0.2.x",
          dependencies = {
             "kkharji/sqlite.lua",
-            -- Only required if using match_algorithm fzf
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
             { "nvim-telescope/telescope-fzy-native.nvim" },
          },
       },
       ["p00f/nvim-ts-rainbow"] = { enabled = false },
       { "astrotheme", enabled = false },
-      -- { "rktjmp/shipwright.nvim", lazy = false },
       {
          "mcchrish/zenbones.nvim",
          lazy = false,
@@ -232,6 +227,12 @@ local config = {
                -- dark_variant = 'moon',
             })
          end,
+      },
+      {
+         "folke/tokyonight.nvim",
+         lazy = false,
+         priority = 1000,
+         opts = {},
       },
       {
          "rebelot/kanagawa.nvim",
@@ -265,7 +266,7 @@ local config = {
                      -- Popular plugins that open floats will link to NormalFloat by default;
                      -- set their background accordingly if you wish to keep them dark and borderless
                      LazyNormal = { bg = theme.ui.bg_m3 },
-                     MasonNormal = { bg = theme.ui.bg_m3, fg },
+                     MasonNormal = { bg = theme.ui.bg_m3 },
                      Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
                      PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
                      PmenuSbar = { bg = theme.ui.bg_m1 },
@@ -305,7 +306,6 @@ local config = {
          end,
          keys = require("user.plugin.hop").keys,
       },
-      { "yioneko/nvim-vtsls", requires = { "neovim/nvim-lspconfig" } },
       {
          "pmizio/typescript-tools.nvim",
          dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -328,34 +328,16 @@ local config = {
       {
          "stevearc/conform.nvim",
       },
-      -- {
-      --    "cormacrelf/dark-notify",
-      --    lazy = false,
-      --    config = function()
-      --       if require("user.utils").get_os() == "darwin" then
-      --          require("dark_notify").run({
-      --             schemes = {
-      --                dark = theme_dark,
-      --                light = theme_light,
-      --             },
-      --          })
-      --       end
-      --    end,
-      -- },
       {
-         "ruifm/gitlinker.nvim",
-         config = function()
-            local default_callbacks = {
-               ["github.com"] = require("gitlinker.hosts").get_github_type_url,
-            }
-            local ok, extra = pcall(require, "user.extra")
-            local callbacks = not ok and default_callbacks or extra.gitlinker_callbacks
-
-            require("gitlinker").setup({
-               opts = { print_url = false },
-               callbacks = callbacks,
-            })
-         end,
+         "linrongbin16/gitlinker.nvim",
+         cmd = "GitLink",
+         opts = {},
+         keys = {
+            { "<leader>yg", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
+            { "<leader>yb", "<cmd>GitLink blame<cr>", mode = { "n", "v" }, desc = "Yank git blame" },
+            { "<leader>yc", "<cmd>GitLink current_branch<cr>", mode = { "n", "v" }, desc = "Yank git current" },
+            { "<leader>yd", "<cmd>GitLink default_branch<cr>", mode = { "n", "v" }, desc = "Yank git default" },
+         },
       },
       {
          "jose-elias-alvarez/typescript.nvim",
@@ -461,13 +443,6 @@ local config = {
             { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
             { "<leader>lR", vim.lsp.buf.references, desc = "References" },
          },
-         -- opts = function()
-         --    return {
-         --       defaults = {
-         --          -- borderchars = {"▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼",  }
-         --       }
-         --    }
-         -- end
       },
       {
          "xbase-lab/xbase",

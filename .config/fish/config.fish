@@ -43,7 +43,7 @@ function update_theme --on-variable macOS_Theme
     if [ "$macOS_Theme" = "dark" ]
         # source "$HOME/.config/fish/themes/Zenbones Dark.fish"
     else if [ "$macOS_Theme" = "light" ]
-        source "$HOME/.config/fish/themes/Kanagawa_Lotus.fish"
+        # source "$HOME/.config/fish/themes/Kanagawa_Lotus.fish"
     end
 end
 
