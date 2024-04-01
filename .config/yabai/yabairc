@@ -24,4 +24,4 @@ yabai -m config window_gap                   16
 yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
 yabai -m rule --add app="^Arc$" title="^$" manage=off mouse_follows_focus=off
 
-killall borders; borders width=12.0 inactive_color=0xff43436C active_color=0xff6693BF &; disown;
+killall borders; borders width=12.0 inactive_color=0xff43436C active_color=0xff7aa2f7 &; disown;

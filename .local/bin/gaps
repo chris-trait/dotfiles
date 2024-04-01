@@ -6,6 +6,12 @@ PT="0"
 PR="0"
 PB="0"
 
+SPACE="global"
+
+if [ "$2" == "current" ]; then
+    SPACE="current"
+fi
+
 if [ "$1" == "off" ]; then
     GAP=3
     PL=3
@@ -13,8 +19,8 @@ if [ "$1" == "off" ]; then
     PR=3
     PB=3
 elif [ "$1" == "small" ]; then
-    GAP=24
-    PL=64
+    GAP=28
+    PL=80
     PT=12
     PR=12
     PB=12
@@ -44,8 +50,13 @@ else
     fi
 fi
 
-yabai -m config window_gap     $GAP
-yabai -m config left_padding   $PL
-yabai -m config top_padding    $PT
-yabai -m config right_padding  $PR
-yabai -m config bottom_padding $PB
+if [ "$SPACE" == "current" ]; then
+    yabai -m space --gap abs:$GAP
+    yabai -m space --padding abs:$PT:$PB:$PL:$PR
+else
+    yabai -m config window_gap     $GAP
+    yabai -m config left_padding   $PL
+    yabai -m config top_padding    $PT
+    yabai -m config right_padding  $PR
+    yabai -m config bottom_padding $PB
+fi
