@@ -6,25 +6,29 @@ PADDING="0"
 if [ "$1" == "off" ]; then
     WINDOW_GAP=4
     PADDING=4
+    yabai -m config left_padding $PADDING
 elif [ "$1" == "small" ]; then
-    WINDOW_GAP=16
-    PADDING=24
+    WINDOW_GAP=24
+    PADDING=12
+    yabai -m config left_padding 72
 elif [ "$1" == "large" ]; then
     WINDOW_GAP=24
     PADDING=48
+    yabai -m config left_padding $PADDING
 elif [ "$1" == "zen" ]; then
     WINDOW_GAP=32
     PADDING=128
+    yabai -m config left_padding $PADDING
 else
     WINDOW_GAP=$1
     PADDING=$1
     if [ ! -z $2 ]; then 
         PADDING=$2; 
     fi
+    yabai -m config left_padding $PADDING
 fi
 
 yabai -m config window_gap     $WINDOW_GAP
 yabai -m config top_padding    $PADDING
 yabai -m config bottom_padding $PADDING
-yabai -m config left_padding   $PADDING
 yabai -m config right_padding  $PADDING
