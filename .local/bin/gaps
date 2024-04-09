@@ -14,7 +14,7 @@ fi
 
 if [ "$1" == "off" ]; then
     GAP=3
-    PL=3
+    PL=58
     PT=3
     PR=3
     PB=3

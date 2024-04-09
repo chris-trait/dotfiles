@@ -40,6 +40,21 @@ for i = 1, 8 do
 	})
 end
 
+local function get_appearance()
+	if wezterm.gui then
+		return wezterm.gui.get_appearance()
+	end
+	return "Dark"
+end
+
+local function scheme_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return "Tokyo Night Storm"
+	else
+		return "Tokyo Night Storm"
+	end
+end
+
 return {
 	font = wezterm.font_with_fallback({
 		"Iosevka Slab",
