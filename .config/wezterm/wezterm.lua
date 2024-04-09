@@ -6,30 +6,30 @@ function get_appearance()
 	if wezterm.gui then
 		return wezterm.gui.get_appearance()
 	end
-	return 'Dark'
+	return "Dark"
 end
 
 function scheme_for_appearance(appearance)
-	if appearance:find 'Dark' then
-		return 'Kanagawa Dark'
+	if appearance:find("Dark") then
+		return "Kanagawa Dark"
 	else
-		return 'Kanagawa Light'
+		return "Kanagawa Light"
 	end
 end
 
 local mykeys = {
-	{ key = "-",   mods = "LEADER",     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 	{
 		key = "\\",
 		mods = "LEADER",
 		action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
 	},
-	{ key = "z",   mods = "LEADER",     action = "TogglePaneZoomState" },
-	{ key = "c",   mods = "LEADER",     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
-	{ key = "Tab", mods = "CTRL",       action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
+	{ key = "c", mods = "LEADER", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
+	{ key = "Tab", mods = "CTRL", action = wezterm.action({ ActivateTabRelative = 1 }) },
 	{ key = "Tab", mods = "SHIFT|CTRL", action = wezterm.action({ ActivateTabRelative = -1 }) },
-	{ key = "n",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = 1 }) },
-	{ key = "p",   mods = "LEADER",     action = wezterm.action({ ActivateTabRelative = -1 }) },
+	{ key = "n", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = 1 }) },
+	{ key = "p", mods = "LEADER", action = wezterm.action({ ActivateTabRelative = -1 }) },
 }
 
 for i = 1, 8 do
@@ -50,10 +50,11 @@ return {
 	debug_key_events = true,
 	color_schemes = {
 		["Kanagawa Dark"] = kanagawa_wave,
-		["Kanagawa Light"] = kanagawa_lotus
+		["Kanagawa Light"] = kanagawa_lotus,
 	},
 	color_scheme = scheme_for_appearance(get_appearance()),
 	-- colors = colors,
+	-- color_scheme = "Tokyo Night Storm",
 	window_decorations = "RESIZE",
 	window_padding = {
 		left = 0,
@@ -73,5 +74,5 @@ return {
 	leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
 	keys = mykeys,
 	window_background_opacity = 1,
-	macos_window_background_blur = 30
+	macos_window_background_blur = 30,
 }

@@ -1,24 +1,47 @@
 #!/usr/bin/env sh
 
-WINDOW_GAP="0"
-PADDING="0"
+GAP="0"
+PL="0"
+PT="0"
+PR="0"
+PB="0"
+
+SPACE="global"
+
+if [ "$2" == "current" ]; then
+    SPACE="current"
+fi
 
 if [ "$1" == "off" ]; then
-    WINDOW_GAP=4
-    PADDING=4
-    yabai -m config left_padding $PADDING
+    GAP=3
+    PL=3
+    PT=3
+    PR=3
+    PB=3
 elif [ "$1" == "small" ]; then
-    WINDOW_GAP=24
-    PADDING=12
-    yabai -m config left_padding 72
+    GAP=28
+    PL=80
+    PT=12
+    PR=12
+    PB=12
+elif [ "$1" == "medium" ]; then
+    GAP=32
+    PL=76
+    PT=24
+    PR=24
+    PB=24
 elif [ "$1" == "large" ]; then
-    WINDOW_GAP=24
-    PADDING=48
-    yabai -m config left_padding $PADDING
+    GAP=32
+    PL=116
+    PT=64
+    PR=64
+    PB=64
 elif [ "$1" == "zen" ]; then
-    WINDOW_GAP=32
-    PADDING=128
-    yabai -m config left_padding $PADDING
+    GAP=32
+    PL=180
+    PT=128
+    PR=128
+    PB=128
 else
     WINDOW_GAP=$1
     PADDING=$1
@@ -28,7 +51,13 @@ else
     yabai -m config left_padding $PADDING
 fi
 
-yabai -m config window_gap     $WINDOW_GAP
-yabai -m config top_padding    $PADDING
-yabai -m config bottom_padding $PADDING
-yabai -m config right_padding  $PADDING
+if [ "$SPACE" == "current" ]; then
+    yabai -m space --gap abs:$GAP
+    yabai -m space --padding abs:$PT:$PB:$PL:$PR
+else
+    yabai -m config window_gap     $GAP
+    yabai -m config left_padding   $PL
+    yabai -m config top_padding    $PT
+    yabai -m config right_padding  $PR
+    yabai -m config bottom_padding $PB
+fi
