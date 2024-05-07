@@ -22,7 +22,9 @@ return {
             spell = false, -- sets vim.opt.spell
             -- signcolumn = "auto", -- sets vim.opt.signcolumn to auto
             wrap = true, -- sets vim.opt.wrap
+            -- conceallevel = 1,
             showtabline = 0,
+            guicursor = "n-v-c-sm:block-Cursor,i-ci-ve:ver25,r-cr-o:hor20",
          },
          g = { -- vim.g.<key>
             -- configure global vim variables (vim.g)

@@ -1,21 +1,9 @@
 local wezterm = require("wezterm")
 local kanagawa_wave = require("kanagawa-wave")
 local kanagawa_lotus = require("kanagawa-lotus")
-
-function get_appearance()
-	if wezterm.gui then
-		return wezterm.gui.get_appearance()
-	end
-	return "Dark"
-end
-
-function scheme_for_appearance(appearance)
-	if appearance:find("Dark") then
-		return "Kanagawa Dark"
-	else
-		return "Kanagawa Light"
-	end
-end
+local rose_pine = require("themes.rose-pine")
+local rose_pine_dawn = require("themes.rose-pine-dawn")
+local rose_pine_moon = require("themes.rose-pine-moon")
 
 local mykeys = {
 	{ key = "-", mods = "LEADER", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
@@ -49,9 +37,9 @@ end
 
 local function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		return "Tokyo Night Storm"
+		return "Rose Pine"
 	else
-		return "Tokyo Night Storm"
+		return "Rose Pine Dawn"
 	end
 end
 
@@ -66,6 +54,9 @@ return {
 	color_schemes = {
 		["Kanagawa Dark"] = kanagawa_wave,
 		["Kanagawa Light"] = kanagawa_lotus,
+		["Rose Pine"] = rose_pine.colors(),
+		["Rose Pine Dawn"] = rose_pine_dawn.colors(),
+		["Rose Pine Moon"] = rose_pine_moon.colors(),
 	},
 	color_scheme = scheme_for_appearance(get_appearance()),
 	-- colors = colors,

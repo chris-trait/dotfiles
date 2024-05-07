@@ -14,13 +14,13 @@ fi
 
 if [ "$1" == "off" ]; then
     GAP=3
-    PL=58
+    PL=3
     PT=3
     PR=3
     PB=3
 elif [ "$1" == "small" ]; then
     GAP=28
-    PL=80
+    PL=12
     PT=12
     PR=12
     PB=12
